@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.kh</groupId>
-	<artifactId>portpolio</artifactId>
+	<artifactId>portfolio</artifactId>
 	<name>springedu</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
@@ -16,18 +16,17 @@
 		<jackson-databind-version>2.11.1</jackson-databind-version>
 		<junit-jupiter-version>5.6.2</junit-jupiter-version>
 	</properties>
-	<!-- oracle driver 저장소 -->
-	<repositories>
-		<repository>
-			<id>oracle</id>
-			<name>ORACLE JDBC Repository</name>
-			<url>https://maven.xwiki.org/externals/</url>
-		</repository>
-	</repositories>
-
-
+	
+	<!-- oracle dirver 저장소 -->
+  <repositories>
+  	<repository>
+  		<id>oracle</id>
+  		<name>ORACLE JDBC Repository</name>
+  		<url>https://maven.xwiki.org/externals/</url>
+  	</repository>
+  </repositories>
+  	
 	<dependencies>
-
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -130,77 +129,78 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- json포맷을 java객체로 변환 -->
+
+		<!-- 데이터 포맷 변환 시작 -->
+		<!-- json포맷을 java객체로 변환 or java객체를 json포맷으로 변환 -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson-databind-version}</version>
 		</dependency>
-		<!-- xml포맷을 java객체로 변환 or java객체를 json포맷으로 변환 -->
+		<!-- xml포맷을 java객체로 변환 or java객체를 xml포맷으로 변환 -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
 			<version>${jackson-databind-version}</version>
 		</dependency>
-		<!-- 데이터 포맷 변화 끝 -->
-
-
+		<!-- 데이터 포맷 변환 끝 -->
 		<!-- DB연동 시작 -->
+		<!-- spring jdbc -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${org.springframework-version}</version>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-jdbc</artifactId>
+		    <version>${org.springframework-version}</version>
 		</dependency>
-
-		<!-- oracle 드라이버 -->
+		
+  	<!-- oracle 드라이버 -->
+  	<dependency>
+  		<groupId>com.oracle.jdbc</groupId>
+  		<artifactId>ojdbc8</artifactId>
+  		<version>12.2.0.1</version>
+  	</dependency>
+  	
+  	<!-- 커넥션 풀 -->
 		<dependency>
-			<groupId>com.oracle.jdbc</groupId>
-			<artifactId>ojdbc8</artifactId>
-			<version>12.2.0.1</version>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-dbcp2</artifactId>
+		    <version>2.7.0</version>
 		</dependency>
-
-		<!-- 커넥션 풀 -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-dbcp2</artifactId>
-			<version>2.7.0</version>
-		</dependency>
+		
 		<!-- mybatis -->
 		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>3.5.5</version>
+	    <groupId>org.mybatis</groupId>
+	    <artifactId>mybatis</artifactId>
+	    <version>3.5.5</version>
 		</dependency>
-		<!-- mybatis-spring -->
+		
 		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-spring</artifactId>
-			<version>2.0.5</version>
+		    <groupId>org.mybatis</groupId>
+		    <artifactId>mybatis-spring</artifactId>
+		    <version>2.0.5</version>
 		</dependency>
-
-
-		<!-- DB연동 끝 -->
-
-		<!-- junit -->
+		<!-- DB연동 종료 -->
+			
+		<!-- Spring-test 시작 -->	
 		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<version>${junit-jupiter-version}</version>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-test</artifactId>
+	    <version>${org.springframework-version}</version>
+	    <scope>test</scope>
 		</dependency>
-
+		<!-- Spring-test 종료 -->
+			
+		<!-- Junit 단위 테스트를 하기위한 프레임워크 시작 -->
 		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>${junit-jupiter-version}</version>
+	    <groupId>org.junit.jupiter</groupId>
+	    <artifactId>junit-jupiter-api</artifactId>
+	    <version>${junit-jupiter-version}</version>
 		</dependency>
-		<!-- spring test -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${org.springframework-version}</version>
-			<scope>test</scope>
-		</dependency>
-
+		    <groupId>org.junit.jupiter</groupId>
+		    <artifactId>junit-jupiter-engine</artifactId>
+		    <version>${junit-jupiter-version}</version>
+		</dependency>			
+		<!-- Junit 종료 -->		
 	</dependencies>
 	<build>
 		<plugins>

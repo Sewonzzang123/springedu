@@ -5,14 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Insert title here</title>
+<title>테스트</title>
 </head>
 <body>
-반갑습니다
-이름: ${name }
-|${requestScope.name }
-|${sessionScope.name }
-|${applicationScope.name }
-나이: ${age }
+  반갑습니다.<br>
+ 이름 : ${name }|${requestScope.name } |${sessionScope.name }|${aplicationScope.name }
+ 나이 : ${age }
 </body>
 </html>

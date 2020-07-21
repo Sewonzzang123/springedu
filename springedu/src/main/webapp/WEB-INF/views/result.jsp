@@ -8,11 +8,11 @@
 <title>덧셈 계산기</title>
 </head>
 <body>
-<form method="GET" action="/portfolio/cal/result">
-<input type="text" name="op1" id="op1"/>+
-<input type="text" name="op2" id="op2"/>
-<button>전송</button>
-결과: ${requestScope.result }
+<form method="get" action="/portfolio/cal/result">
+	<input type="text" name="op1" required="required"/> +
+	<input type="text" name="op2" required="required"/>
+	<button>전송</button>
+	결과 : ${requestScope.result }
 </form>
 </body>
 </html>

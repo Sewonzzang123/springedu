@@ -1,7 +1,5 @@
 package com.kh.portpolio;
 
-
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -18,11 +16,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
-@ExtendWith(SpringExtension.class)//스프링 컨텍스트와 junit통합
-@ContextConfiguration(locations= {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
-public class DBConnection {
-	private static final Logger logger 
-	= LoggerFactory.getLogger(DBConnection.class);
+@ExtendWith(SpringExtension.class) //스프링 컨텍스트와 junit통합
+@ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
+public class DBconnection {
+	private static final Logger logger =
+			LoggerFactory.getLogger(DBconnection.class);
 	
 	@Inject
 	DataSource dataSource;
@@ -32,16 +30,29 @@ public class DBConnection {
 	
 	@Test
 	void testdb() {
-		logger.info("dataSource: "+dataSource);
-		logger.info("jdbcTemplate: "+jdbcTemplate);
+		logger.info("DataSource		:" + dataSource);
+		logger.info("JdbcTemplate :" + jdbcTemplate);
+		
 		try {
-		Connection con = dataSource.getConnection();
-		Assertions.assertNotNull(con);
-		logger.info("DB연결 성공!");
-		}catch(SQLException e) {
+			Connection con = dataSource.getConnection();
+			Assertions.assertNotNull(con);
+			logger.info("DB연결 성공!!");
+		} catch (SQLException e) {
 			logger.info("DB연결 실패!");
 			e.printStackTrace();
 		}
 	}
-	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
