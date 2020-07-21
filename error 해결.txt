@@ -1,0 +1,7 @@
+환경설정 문제
+deployment assembly > maven dependencies가있는지 확인하기
+build path 에서 버전정보 제대로 되어있는지 확인하기
+project facets 에서 버전, 톰캣 런타임되어있는지 확인하기
+iligal오류 생기면 톰캣파일>webapps 안에서 해당 파일
+삭제해두기
+
