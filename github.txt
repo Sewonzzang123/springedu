@@ -1,0 +1,22 @@
+git: 형상관리프로그램
+github: 형상관리프로그램을 웹상에서
+ 사용할수있도록 지원되는 웹프로그램
+
+
+local directory: 지역 저장소(내 PC)
+remote directory: 원격 저장소(github)
+working directory: 작업디렉토리로 형상관리대상 파일이 존재하는곳
+
+
+unstaging:commit이후 변경된 대상
+staging:commit대상을 준비하기위한 단계
+
+untracted file: 저장소에 기록이 없는 최초의 파일을 의미한다.
+tracted file: 저장소에서 한번이라도 기록된 파일
+
+
+commit: 의미있는 단위로 기록을 남김
+해시코드가 생성됨
+로컬저장소에 기록됨
+
+javaedu>mygit>test_1
