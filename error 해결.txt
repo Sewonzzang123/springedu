@@ -1,7 +1,33 @@
-ȯ�漳�� ����
-deployment assembly > maven dependencies���ִ��� Ȯ���ϱ�
-build path ���� �������� ����� �Ǿ��ִ��� Ȯ���ϱ�
-project facets ���� ����, ��Ĺ ��Ÿ�ӵǾ��ִ��� Ȯ���ϱ�
-iligal���� ����� ��Ĺ����>webapps �ȿ��� �ش� ����
-�����صα�
+환경설정 문제
+deployment assembly > maven dependencies가있는지 확인하기
+build path 에서 버전정보 제대로 되어있는지 확인하기
+project facets 에서 버전, 톰캣 런타임되어있는지 확인하기
+iligal오류 생기면 톰캣파일>webapps 안에서 해당 파일
+삭제해두기
 
+lombok설치 >>lombok파일위치 가서 (shift+우클릭)명령창 열기
+java -jar lombok-1.18.12.jar 입력
+>>lombok이 실행됨
+sts가서 스프링 누르고 설치하셈
+새로시작하면 됨
+@Data 를 하면 getter,setter 자동생성
+
+marketplace에서 설치할 목록
+EGit
+MyBatipse
+ResourceBundle Editor
+Spring tools
+VMware
+
+>>spring 특징<<
+root-context.xml에있는
+<!-- @component :@Controller, @Service, @Repository중에서
+@Controller를 제외한 클래스만 인스턴스화 하도록 설정함 -->
+<context:component-scan base-package="com.kh.portfolio">
+<context:exclude-filter type="annotation" 														expression="org.springframework.stereotype.Controller"/>
+</context:component-scan>
+따라서 JDBCTest에서 memberDAO에있는 @Repository를 new 없이 사용할 수 있음.
+
+Assertions.assertEquals(1,cnt);
+1: 예상값
+뒤에꺼 :결과값
