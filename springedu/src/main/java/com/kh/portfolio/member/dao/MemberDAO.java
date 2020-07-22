@@ -17,7 +17,7 @@ public interface MemberDAO {
 	//회원 탈퇴
 	int outMember(String id, String pw);
 	//로그인
-	int login(String id, String pw);
+	MemberVO login(String id, String pw);
 	//아이디 찾기
 	String findID(String tel, String birth);
 	//비밀번호 찾기

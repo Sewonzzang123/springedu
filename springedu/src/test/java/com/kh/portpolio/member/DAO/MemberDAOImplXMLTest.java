@@ -22,12 +22,16 @@ import com.kh.portfolio.member.vo.MemberVO;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
-public class MemberDAOImplJDBCTest {
+public class MemberDAOImplXMLTest {
 	private static final Logger logger = 
-			LoggerFactory.getLogger(MemberDAOImplJDBCTest.class);
+			LoggerFactory.getLogger(MemberDAOImplXMLTest.class);
 	
 	@Inject
-	@Qualifier("memberDAOImplJDBC")
+	//@Qualifier: spring 컨테이너에 동일타입의 bean이 존재할 경우 명시적으로 
+	//참조하고자하는 bean을 지정할때 사용
+	//spring컨테이너에서 관리되는 bean이름은 특별히 지정해주지 않으면 클래스명을 기본값으로.
+	//첫글자는 소문자 !!
+	@Qualifier("memberDAOImplXML")
 	MemberDAO memberDAO;
 	
 	@Test
@@ -35,7 +39,7 @@ public class MemberDAOImplJDBCTest {
 	@Disabled //테스트 대상에서 제외
 	void joinMember() {
 		MemberVO memberVO = new MemberVO();
-		memberVO.setId("test@test.com");
+		memberVO.setId("test1@test.com");
 		memberVO.setPw("1234");
 		memberVO.setTel("010-1234-5678");
 		memberVO.setNickname("관리자2");
@@ -52,16 +56,16 @@ public class MemberDAOImplJDBCTest {
 	@Disabled
 	void modifyMember() {
 		MemberVO memberVO = new MemberVO();
-		memberVO.setId("test@test.com");
+		memberVO.setId("test1@test.com");
 		memberVO.setTel("010-1234-6789");
-		memberVO.setNickname("관리자");
-		memberVO.setGender("남");
+		memberVO.setNickname("관리자123");
+		memberVO.setGender("여");
 		memberVO.setRegion("서울");
 		memberVO.setBirth(java.sql.Date.valueOf("2000-01-02"));
 		
 		int cnt=memberDAO.modifyMember(memberVO);
 	//예상값과 결과값이 다를경우 fail이됨
-		Assertions.assertEquals(2,cnt); 
+		Assertions.assertEquals(1,cnt); 
 		logger.info("cnt: "+cnt);
 		
 	}
@@ -93,7 +97,7 @@ public class MemberDAOImplJDBCTest {
 	@Disabled
 	void outMember() {
 		String id="test2@test.com";
-		String pw="1234";
+		String pw="1223";
 		
 		int result= memberDAO.outMember(id, pw);
 		
@@ -115,8 +119,8 @@ public class MemberDAOImplJDBCTest {
 	@DisplayName("아이디 찾기")
 	@Disabled
 	void findID() {
-		String tel="010-1324-5678";
-		String birth="2000-01-01";
+		String tel="010-1234-6789";
+		String birth="2000-01-02";
 		
 		String id = memberDAO.findID(tel, birth);
 		logger.info(id);
@@ -128,9 +132,9 @@ public class MemberDAOImplJDBCTest {
 	@DisplayName("비밀번호 찾기")
 	@Disabled
 	void findPW() {
-		String id="test2@test.com";
-		String tel="010-1324-5678";
-		String birth="2000-01-01";
+		String id="test1@test.com";
+		String tel="010-1234-6789";
+		String birth="2000-01-02";
 		
 		String pw = memberDAO.findPW(id, tel, birth);
 		Assertions.assertEquals("1234",pw);
@@ -139,10 +143,10 @@ public class MemberDAOImplJDBCTest {
 	
 	@Test
 	@DisplayName("비밀번호 변경")
-	//@Disabled
+//	@Disabled
 	void changePW() {
-		String id = "test2@test.com";
-		String pw="1223";
+		String id = "test1@test.com";
+		String pw="1323";
 		int result = memberDAO.changePW(id, pw);
 		Assertions.assertEquals(pw,memberDAO.listOneMember(id).getPw());
 	}
