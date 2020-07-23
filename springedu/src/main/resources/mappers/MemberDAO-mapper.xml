@@ -21,6 +21,7 @@
 		udate=
 		systimestamp
 		where id= #{id}
+		and pw =#{pw}
 	</update>
 	<!-- //회원 조회(전체) -->
 	<select id="listAllMember"

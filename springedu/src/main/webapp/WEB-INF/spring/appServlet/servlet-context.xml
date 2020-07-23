@@ -15,14 +15,23 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<!-- 정적 리소스에 대한 url매핑을 하고자할때 사용 -->
-	<resources mapping="/resources/**" location="/WEB-INF/resources/" />
-
+	<!-- 컨텍스트 루트 바로다음에 써놓으면 뒤에 로케이션 주소가 불려옴 -->
+	<resources mapping="/**" location="/WEB-INF/resources/" />
+	<resources mapping="/img/**" location="/WEB-INF/resources/img/" />
+	<resources mapping="/css/**" location="/WEB-INF/resources/css/" />
+	<resources mapping="/js/**" location="/WEB-INF/resources/js/" />
+	
+	<!-- 웹 컴포넌트 라이브러리 url 매핑 -->
+	<!-- classpath: maven이거나 apache이거나 jre일수있음. 여기서 맞는데를 찾는거임 -->
+		<resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" />
+	
+	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
+
 	<!-- @component :@Controller, @Service, @Repository중에서 
 									 @Controller 클래스만 인스턴스화 하도록 설정함 -->
 	<context:component-scan base-package="com.kh.portfolio"

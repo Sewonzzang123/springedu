@@ -139,7 +139,7 @@ public class MemberDAOImplJDBCTest {
 	
 	@Test
 	@DisplayName("비밀번호 변경")
-	//@Disabled
+	@Disabled
 	void changePW() {
 		String id = "test2@test.com";
 		String pw="1223";
