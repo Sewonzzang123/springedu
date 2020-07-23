@@ -2,6 +2,7 @@ package com.kh.portpolio.member.DAO;
 
 
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -116,7 +117,7 @@ public class MemberDAOImplJDBCTest {
 	@Disabled
 	void findID() {
 		String tel="010-1324-5678";
-		String birth="2000-01-01";
+		Date birth=java.sql.Date.valueOf("2000-01-01");
 		
 		String id = memberDAO.findID(tel, birth);
 		logger.info(id);
@@ -130,7 +131,8 @@ public class MemberDAOImplJDBCTest {
 	void findPW() {
 		String id="test2@test.com";
 		String tel="010-1324-5678";
-		String birth="2000-01-01";
+		Date birth=java.sql.Date.valueOf("2000-01-01");
+		
 		
 		String pw = memberDAO.findPW(id, tel, birth);
 		Assertions.assertEquals("1234",pw);
@@ -142,8 +144,9 @@ public class MemberDAOImplJDBCTest {
 	@Disabled
 	void changePW() {
 		String id = "test2@test.com";
-		String pw="1223";
-		int result = memberDAO.changePW(id, pw);
-		Assertions.assertEquals(pw,memberDAO.listOneMember(id).getPw());
+		String prepw="1223";
+		String postpw="1234";
+		int result = memberDAO.changePW(id, prepw,postpw);
+		Assertions.assertEquals(postpw,memberDAO.listOneMember(id).getPw());
 	}
 }

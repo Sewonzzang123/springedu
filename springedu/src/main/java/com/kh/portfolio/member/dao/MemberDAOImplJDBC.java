@@ -1,21 +1,18 @@
 package com.kh.portfolio.member.dao;
 
-import java.sql.PreparedStatement;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.eclipse.jdt.internal.compiler.ast.MemberValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import com.kh.portfolio.member.vo.MemberVO;
 
@@ -153,7 +150,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
 
 	// 아이디 찾기
 	@Override
-	public String findID(String tel, String birth) {
+	public String findID(String tel, Date birth) {
 		logger.info("MemberDAOImpl.findID");
 		String id = null;
 		StringBuilder sql = new StringBuilder();
@@ -171,7 +168,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
 
 	// 비밀번호 찾기
 	@Override
-	public String findPW(String id, String tel, String birth) {
+	public String findPW(String id, String tel, Date birth) {
 		logger.info("MemberDAOImpl.findID");
 		String pw = null;
 		StringBuilder sql = new StringBuilder();
@@ -191,14 +188,14 @@ public class MemberDAOImplJDBC implements MemberDAO {
 
 	// 비밀번호 변경
 	@Override
-	public int changePW(String id, String pw) {
+	public int changePW(String id,String prepw, String postpw) {
 		logger.info("MemberDAO.changePW(String id, String pw)");
 		int result = 0;
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append("update member set pw=? where id=? ");
+		sql.append("update member set pw=? where id=? and pw=?");
 		
-		result = jdbcTemplate.update(sql.toString(),pw,id);
+		result = jdbcTemplate.update(sql.toString(),postpw,id,prepw);
 		return result;
 	}
 
