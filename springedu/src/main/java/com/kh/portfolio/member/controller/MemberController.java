@@ -154,7 +154,7 @@ public class MemberController {
 		} else {
 			map.put("rtcode", "01");
 			map.put("result","찾고자 하는 아이디가 없습니다.");
-			res = new ResponseEntity<Map>(map,HttpStatus.BAD_REQUEST);
+			res = new ResponseEntity<Map>(map,HttpStatus.OK);
 		}
 		return res;
 	}
@@ -165,10 +165,32 @@ public class MemberController {
 		return "/member/findPWForm";
 	}
 
-	@PostMapping("/findPW")
-	public ResponseEntity<Map> findPW() {
-		ResponseEntity<Map> res = null;
+	@PostMapping(value = "/pw", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<Map> findPW(@RequestBody MemberVO memberVO) {
 
+		logger.info("ResponseEntity<Map> findID()");
+		logger.info("id: "+memberVO.getId());
+		logger.info("tel:" + memberVO.getTel());
+		logger.info("birth:" + memberVO.getBirth());
+		ResponseEntity<Map> res = null;
+		String findPW = null;
+		
+		//문자열 birth를 java.sql.Date타입으로 변환 <<<<<<!!!!!
+		memberVO.setBirth(java.sql.Date.valueOf(memberVO.getBirth().toString()));
+		findPW = memberSVC.findPW(memberVO.getId(),memberVO.getTel(), memberVO.getBirth());
+		
+		Map<String, Object> map = new HashMap<>();
+		// 아이디를 찾았으면
+		if (findPW != null) {
+			map.put("rtcode", "00");
+			map.put("result", findPW);
+			res = new ResponseEntity<Map>(map,HttpStatus.OK);//200
+		} else {
+			map.put("rtcode", "01");
+			map.put("result","찾고자 하는 비밀번호가 없습니다.");
+			res = new ResponseEntity<Map>(map,HttpStatus.OK);
+		}
 		return res;
 	}
 }

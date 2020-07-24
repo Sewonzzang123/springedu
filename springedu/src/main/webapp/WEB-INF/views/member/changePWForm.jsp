@@ -53,7 +53,7 @@
   <%--@ include file="/header.jsp" --%>
 
   <!-- 메뉴 -->
-  <%@ include file="/WEB-INF/views/include/menu.jsp" %>
+  <%@ include file="/WEB-INF/views/member/menu.jsp" %>
 	  
 	<main>
 		<div class="container">

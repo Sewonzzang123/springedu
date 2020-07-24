@@ -6,6 +6,7 @@
 <style>
   #findIDForm * {
   	box-sizing: border-box;
+  	margin:2px;
   }
 	#findIDForm input {
 			width:100%;
@@ -73,7 +74,7 @@
     		  document.getElementById('birth').select();
     		  return false;    		  
     	  }
-    	  
+    	  return true;
       }
            
       //아이디 찾기 버튼 클릭시
@@ -91,7 +92,6 @@
         //AJAX 사용
         //1)XMLHTTPRequest 객체 생성
         const xhttp = new XMLHttpRequest();
-
         //2)서버응답 처리
         //readyState
         // 0 : open()가 호출되지 않은 상태
@@ -103,22 +103,20 @@
         function ajaxCall(event) {
           if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
-
             //json포맷 문자열 => 자바스크립트 ojb
             const jsonObj = JSON.parse(this.responseText);
             
             switch(jsonObj.rtcode){
-            case "success" :
-            	findedIDTag.textContent = jsonObj.value;
+            case "00" :
+            	findedIDTag.textContent = jsonObj.result;
             	errmsgTag.textContent = '';
             	break;
-            case "fail" :
-            	errmsgTag.textContent = jsonObj.value;            	
+            case "01" :
+            	errmsgTag.textContent = jsonObj.result;            	
             	break;
             }          
           }
         }
-
         //3)요청 파라미터만들기(json포맷) { "tel": "010-1234-5678", "birth":"2020-07-01" }
         const reqParam = {};
         reqParam.tel = telTag.value;
@@ -126,17 +124,26 @@
         //js객체를 json포맷 문자열로 변환JSON.stringify()
         //json포맷 문자열을 js객체로 변환JSON.parse()
         const result = JSON.stringify(reqParam);
-
         //4)서비스요청
         xhttp.open(
           "POST",
-          "http://localhost:9080/myweb/member/findIdByRestfull"
+          "http://localhost:9080${contextPath}/member/id"
         );
-        xhttp.setRequestHeader(
+        //post form 요청시 필요
+/*         xhttp.setRequestHeader(
           "Content-Type",
           "application/x-www-form-urlencoded"
-        );
-        xhttp.send("result=" + result);
+        ); */
+        
+        //post json 요청시 필요
+        xhttp.setRequestHeader(
+                  "Content-Type",
+                  "application/json;charset=utf-8"
+        );    
+        //querystring 전송 필요시
+        //xhttp.send("result=" + result);
+        //queryString 불필요시
+        xhttp.send(result);
       }
     </script>
 </head>
