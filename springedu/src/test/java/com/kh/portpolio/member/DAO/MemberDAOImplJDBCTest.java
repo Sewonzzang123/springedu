@@ -117,6 +117,7 @@ public class MemberDAOImplJDBCTest {
 	@Disabled
 	void findID() {
 		String tel="010-1324-5678";
+		//String birth="2000-01-01";
 		Date birth=java.sql.Date.valueOf("2000-01-01");
 		
 		String id = memberDAO.findID(tel, birth);

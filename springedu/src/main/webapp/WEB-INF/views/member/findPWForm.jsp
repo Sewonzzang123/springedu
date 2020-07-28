@@ -23,15 +23,13 @@
 		letter-spacing: 1em;
 		border-radius: 5px;
 	}
-	#findPWForm #findedPW {
+	#findPWForm #findedPW,
+	#findPWForm .errmsg {
 		color :blue;
+		font-size: 0.7em;
 		font-weight: bold;  
 	}	
-	#findPWForm .errmsg {
-	 	color:red;
-  	font-size: 0.7em;
-		font-weight: bold;  	
-	}
+
 </style>	
 <script>
       window.addEventListener("load", init);
@@ -47,6 +45,8 @@
       function okBtn_f(event){
     	  event.preventDefault();    	  
     	  const findedPWTag = document.getElementById('findedPW');
+    	  window.close();
+    	  /*
     	  //찾은 비밀번호 발견되었으면
     	  if(findedPWTag.textContent){   
     		  
@@ -55,6 +55,7 @@
 	    	        .document.getElementById('pw').value = findedPWTag.textContent;
     	  	window.close();
     	  }
+    	  */
       }
       
       //유효성 체크
@@ -79,6 +80,7 @@
     		  document.getElementById('birth').select();
     		  return false;    		  
     	  }
+    	  
     	  return true;
       }
       
@@ -136,15 +138,14 @@
         const result = JSON.stringify(reqParam);
 
         //4)서비스요청
-       xhttp.open(
+        xhttp.open(
           "POST",
-          "http://localhost:9080${contextPath}/member/pw"
+          "http://localhost:9080/${contextPath}/member/pwmail"
         );
-       //post json 요청시 필요
-       xhttp.setRequestHeader(
+        xhttp.setRequestHeader(
                 "Content-Type",
                 "application/json;charset=utf-8"
-              );
+      	); 
         xhttp.send(result);
       }
     </script>
