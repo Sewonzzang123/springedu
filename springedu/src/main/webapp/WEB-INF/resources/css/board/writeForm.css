@@ -1,0 +1,35 @@
+@charset "utf-8";
+
+  /* 본문 영역 */
+  main{ display:flex; justify-content: center}
+        form {
+        margin:30px;
+        min-width: 400px;
+      }
+      form * {
+        box-sizing: border-box;
+      }
+      form legend {
+        display: flex;
+        justify-content: center;
+        margin: 10px;
+        font-weight: bold;
+      }
+      form > ul > li > label {
+        display: inline-block;
+        width: 70px;
+      }
+      form ul > li {
+        display: flex;
+        margin: 5px;
+      }
+      form #bcontent {
+        width: 100%;
+      }
+      form > ul > li:nth-last-child(1) {
+        display: flex;
+        justify-content: flex-end;
+      }
+      form > ul > li:nth-last-child(1) > button {
+        margin-left: 3px;
+      }

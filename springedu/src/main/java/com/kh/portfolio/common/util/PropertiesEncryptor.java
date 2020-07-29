@@ -18,8 +18,8 @@ public class PropertiesEncryptor {
 		System.out.println(enc.encrypt(""));
 		
 		//mail암호화
-		System.out.println(enc.encrypt("dkrlrhdrur@gmail.com"));
-		System.out.println(enc.encrypt(""));
+		System.out.println(enc.encrypt("spring"));
+		System.out.println(enc.encrypt("spring1234"));
 		
 		//복호화
 		System.out.println(enc.decrypt("+4J2oANlBNioZ683EmH10yBIoywZn/cPksqISgFBLTI="));

@@ -8,19 +8,19 @@
 </head>
 <body>
 	<!-- 최상위메뉴 -->
-	<%@ include file="./include/uppermost.jsp" %>
+	<%@ include file="/WEB-INF/views/include/uppermost.jsp" %>
 
   <!-- header -->
-  <%@ include file="./include/header.jsp" %>
+  <%@ include file="/WEB-INF/views/include/header.jsp" %>
 
   <!-- 메뉴 -->
-  <%@ include file="./include/menu.jsp" %>
+  <%@ include file="/WEB-INF/views/include/menu.jsp" %>
 
   <!-- 본문 -->
-  <%@ include file="./include/main.jsp" %>
+  <%@ include file="/WEB-INF/views/include/main.jsp" %>
 
   <!-- 푸터 -->
-  <%@ include file="./include/footer.jsp" %>  
+  <%@ include file="/WEB-INF/views/include/footer.jsp" %>  
 
 </body>
 </html>
