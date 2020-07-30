@@ -22,7 +22,7 @@ import com.kh.portfolio.member.dao.MemberDAO;
 import com.kh.portfolio.member.vo.MemberVO;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
+@ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/spring/*.xml"})
 public class MemberDAOImplXMLTest {
 	private static final Logger logger = 
 			LoggerFactory.getLogger(MemberDAOImplXMLTest.class);
@@ -40,7 +40,7 @@ public class MemberDAOImplXMLTest {
 	@Disabled //테스트 대상에서 제외
 	void joinMember() {
 		MemberVO memberVO = new MemberVO();
-		memberVO.setId("test1@test.com");
+		memberVO.setId("test2@test.com");
 		memberVO.setPw("1234");
 		memberVO.setTel("010-1234-5678");
 		memberVO.setNickname("관리자2");

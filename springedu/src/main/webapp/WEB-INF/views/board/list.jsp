@@ -24,7 +24,7 @@
 		<div class="container">
 			<div class="content">
 		
-			
+			게시판 리스트 화면
 			
 			</form></div>
 		</div>

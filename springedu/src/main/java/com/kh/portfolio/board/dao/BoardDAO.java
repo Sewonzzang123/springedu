@@ -11,4 +11,5 @@ public interface BoardDAO {
 	int delete(String bnum);
 	//게시글 보기
 	BoardVO view(String bnum); 
+	//게시글 목록
 }

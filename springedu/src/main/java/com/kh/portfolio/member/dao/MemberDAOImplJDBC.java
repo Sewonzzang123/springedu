@@ -104,7 +104,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
 	// 회원 조회(개별)
 	@Override
 	public MemberVO listOneMember(String id) {
-		logger.info("MemberDAOImpl.listOneMember()");
+//		logger.info("MemberDAOImpl.listOneMember()");
 		StringBuilder sql = new StringBuilder();
 		sql.append("select id,pw,nickname,tel,gender,region,birth,cdate,udate ");
 		sql.append("from member ");
@@ -120,7 +120,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
 	// 회원 탈퇴
 	@Override
 	public int outMember(String id, String pw) {
-		logger.info("MemberDAOImpl.outMember()");
+//		logger.info("MemberDAOImpl.outMember()");
 		int result = 0;
 		StringBuilder sql = new StringBuilder();
 		sql.append("delete from member where id=? and pw=? ");
@@ -133,7 +133,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
 	// 로그인
 	@Override
 	public MemberVO login(String id, String pw) {
-		logger.info("MemberDAOImpl.login()");
+//		logger.info("MemberDAOImpl.login()");
 		StringBuilder sql = new StringBuilder();
 		sql.append("select id,pw,nickname,tel,gender,region,birth,cdate,udate ");
 		sql.append(" from member ");
@@ -151,7 +151,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
 	// 아이디 찾기
 	@Override
 	public String findID(String tel, Date birth) {
-		logger.info("MemberDAOImpl.findID");
+//		logger.info("MemberDAOImpl.findID");
 		String id = null;
 		StringBuilder sql = new StringBuilder();
 		sql.append("select id ");
@@ -169,7 +169,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
 	// 비밀번호 찾기
 	@Override
 	public String findPW(String id, String tel, Date birth) {
-		logger.info("MemberDAOImpl.findID");
+//		logger.info("MemberDAOImpl.findID");
 		String pw = null;
 		StringBuilder sql = new StringBuilder();
 		sql.append("select pw ");
@@ -189,7 +189,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
 	// 비밀번호 변경
 	@Override
 	public int changePW(String id,String prepw, String postpw) {
-		logger.info("MemberDAO.changePW(String id, String pw)");
+//		logger.info("MemberDAO.changePW(String id, String pw)");
 		int result = 0;
 		
 		StringBuilder sql = new StringBuilder();

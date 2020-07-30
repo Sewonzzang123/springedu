@@ -4,6 +4,10 @@
 <%@ include file="/WEB-INF/views/include/common.jsp"%>
 
 <title>게시글 작성</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
 <link rel="stylesheet" href="${contextPath }/css/board/board.css">
 <link rel="stylesheet" href="${contextPath }/css/board/writeForm.css">
 <script defer src="${contextPath }/js/board/writeForm.js"></script>
@@ -23,37 +27,36 @@
 	<main>
 		<div class="container">
 			<div class="content">
-		<form aciton="">
-      <legend>게시글 작성</legend>
-      <ul>
-        <li>
-          <label for="">분류</label>
-          <select name="boardCategoryVO.cid" id="">
-            <option value="1001">spring</option>
-            <option value="1002">database</option>
-            <option value="1003">java</option>
-          </select>
-        </li>
-        <li>
-          <label for="btitle">제목</label
-          ><input type="text" name="btitle" id="btitle" />
-        </li>
-        <li>
-          <label for="bid">작성자</label
-          ><input type="text" name="bid" id="bid" />
-        </li>
-        <li>
-          <label for="bcontent">내용</label
-          ><textarea name="bcontent" id="bcontent" rows="10"></textarea>
-        </li>
-        <li>
-          <label for="">첨부파일</label
-          ><input type="file" name="" id="" multiple />
-        </li>
-        <li><button>등록</button><button>취소</button><button>목록</button></li>
-      </ul>
-    </form>
-    </div>
+				<form id="writeForm" method="POST"
+					action="${contextPath }/board/write" enctype="multipart/form-data">
+					<legend>게시글 작성</legend>
+					<ul>
+						<li><label for="">분류</label> <select
+							name="boardCategoryVO.cid" id="">
+								<option value="">선택</option>
+								<option value="1001">spring</option>
+								<option value="1002">database</option>
+								<option value="1003">java</option>
+						</select></li>
+						<li><label for="btitle">제목</label><input type="text"
+							name="btitle" id="btitle" /></li>
+						<li><label for="bid">작성자</label><input type="text" name="bid"
+							id="bid" /></li>
+						<li><label for="bcontent">내용</label> <textarea
+								name="bcontent" id="bcontent" rows="10"></textarea></li>
+						<li><label for="">첨부파일</label><input type="file" name="files"
+							id="" multiple /></li>
+						<li>
+							<button type="button" id="writeBtn"
+								class="btn btn-outline-success">등록</button>
+							<button type="button" id="cancelBtn"
+								class="btn btn-outline-danger">취소</button>
+							<button type="button" id="listBtn"
+								class="btn btn-outline-warning">목록</button>
+						</li>
+					</ul>
+				</form>
+			</div>
 		</div>
 	</main>
 

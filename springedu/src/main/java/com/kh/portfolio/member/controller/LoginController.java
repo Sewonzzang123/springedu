@@ -30,9 +30,9 @@ public class LoginController {
 	@PostMapping("/login")
 	public String login(@RequestParam("id") String id, @RequestParam("pw") String pw, HttpSession session, Model model) {
 
-		logger.info("String login() 호출");
-		logger.info("id:" + id);
-		logger.info("pw:" + pw);
+//		logger.info("String login() 호출");
+//		logger.info("id:" + id);
+//		logger.info("pw:" + pw);
 
 		// 1)회원 id존재 유무
 		MemberVO memberVO = memberSVC.listOneMember(id);

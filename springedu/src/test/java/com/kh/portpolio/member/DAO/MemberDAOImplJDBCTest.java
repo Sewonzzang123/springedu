@@ -22,7 +22,7 @@ import com.kh.portfolio.member.dao.MemberDAO;
 import com.kh.portfolio.member.vo.MemberVO;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
+@ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/spring/*.xml"})
 public class MemberDAOImplJDBCTest {
 	private static final Logger logger = 
 			LoggerFactory.getLogger(MemberDAOImplJDBCTest.class);
@@ -33,10 +33,10 @@ public class MemberDAOImplJDBCTest {
 	
 	@Test
 	@DisplayName("회원등록")
-	@Disabled //테스트 대상에서 제외
+//	@Disabled //테스트 대상에서 제외
 	void joinMember() {
 		MemberVO memberVO = new MemberVO();
-		memberVO.setId("test@test.com");
+		memberVO.setId("test12323@test.com");
 		memberVO.setPw("1234");
 		memberVO.setTel("010-1234-5678");
 		memberVO.setNickname("관리자2");
