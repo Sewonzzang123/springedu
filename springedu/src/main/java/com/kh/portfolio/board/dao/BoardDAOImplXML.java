@@ -1,5 +1,7 @@
 package com.kh.portfolio.board.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -7,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.kh.portfolio.board.vo.BoardFileVO;
 import com.kh.portfolio.board.vo.BoardVO;
 
 @Repository
@@ -21,6 +24,7 @@ public class BoardDAOImplXML implements BoardDAO{
 	@Override
 	public int write(BoardVO boardVO) {
 		int result = 0;
+		//namespace.id
 		result = sqlSession.insert("mappers.BoardDAO-mapper.write", boardVO);
 		
 		return result;
@@ -42,6 +46,19 @@ public class BoardDAOImplXML implements BoardDAO{
 	public BoardVO view(String bnum) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	//게시글 보기 전체
+	@Override
+	public List<BoardVO> list() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	//파일 첨부
+	@Override
+	public int addFile(BoardFileVO boardFileVO) {
+		int result = 0;
+		result = sqlSession.insert("mappers.BoardDAO-mapper.addFile",boardFileVO);
+		return 0;
 	}
 
 }

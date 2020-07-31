@@ -5,25 +5,53 @@
 	<insert id="write"
 		parameterType="com.kh.portfolio.board.vo.BoardVO">
 		insert into board(
-			bnum,
-			bcategory,
-			btitle,
-			bid,
-			bnickname,
-			bcontent,
-			bgroup,
-			bstep,
-			bindent)
+		bnum,
+		bcategory,
+		btitle,
+		bid,
+		bnickname,
+		bcontent,
+		bgroup,
+		bstep,
+		bindent)
 		values (
-			board_bnum_seq.nextval,
-			#{boardCategoryVO.cid},
-			#{btitle},
-			#{bid},
-			#{bnickname},
-			#{bcontent},
-			board_bnum_seq.currval,
-			0,
-			0)
+		board_bnum_seq.nextval,
+		#{boardCategoryVO.cid},
+		#{btitle},
+		#{bid},
+		#{bnickname},
+		#{bcontent},
+		<!-- currval이나 nextval 해도 같은값이나오네 -->
+		board_bnum_seq.nextval,
+		0,
+		0)
+
+		<!-- 게시글 생성후 게시글번호가 생성되고 이 생성된 번호를 읽어온다. BoardVO.setBnum() -->
+		<selectKey keyProperty="bnum" resultType="long"
+			order="AFTER">
+			select board_bnum_seq.currval
+			from dual
+		</selectKey>
+	</insert>
+
+	<!-- 파일 첨부 -->
+	<insert id="addFile"
+		parameterType="com.kh.portfolio.board.vo.BoardFileVO">
+		insert into BOARD_UPLOAD_FILE(
+		FID
+		,BNUM
+		,FNAME
+		,FSIZE
+		,FTYPE
+		,FDATA
+		) values (
+		board_upload_file_fid_seq.nextval,
+		#{bnum},
+		#{fname},
+		#{fsize},
+		#{ftype},
+		#{fdata}
+		)
 	</insert>
 	<!-- 게시글 수정 -->
 
@@ -32,4 +60,6 @@
 	<!-- 게시글 보기 -->
 
 	<!-- 게시글 목록 -->
+
+
 </mapper>

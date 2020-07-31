@@ -9,22 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import com.kh.portfolio.board.dao.BoardDAO;
-import com.kh.portfolio.board.vo.BoardCategoryVO;
-import com.kh.portfolio.board.vo.BoardVO;
-
-import javax.inject.Inject;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -44,6 +28,7 @@ public class BoardDAOImplXMLTEST {
 	
 	@Test
 	@DisplayName("게시글 작성")
+	@Disabled
 	void write() {
 //    #{cid},
 //    #{btitle},
@@ -63,4 +48,7 @@ public class BoardDAOImplXMLTEST {
 		int result = boardDAO.write(boardVO);
 		Assertions.assertEquals(1, result);
 	}
+	
+	
+	
 }

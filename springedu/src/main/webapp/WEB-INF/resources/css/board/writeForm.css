@@ -6,6 +6,8 @@ main {
 	justify-content: center
 }
 
+
+
 .btn {
 	display: inline-block;
 	font-weight: 200;
@@ -52,22 +54,24 @@ form>ul>li>label {
 	letter-spacing: 0.3em; /*부모요소 폰트의 30%*/
 }
 
-form input[name="btitle"] {
-	width: 80%;
-}
-
-form input[name="bid"] {
-	width: 50%;
-}
 
 form ul>li {
-	display: flex;
-	margin: 5px;
+	display: grid;
+	grid-template-columns:15% 1fr;
+	margin: 10px 0;
 }
 
-form #bcontent {
-	width: 100%;
+/* form태그에서 속성을 묶으려면 cssClass로 묶어 */
+form .svr_msg{
+	color:red;
+	font-weight:bold;
+	font-size:0.7em;
 }
+
+form>ul>li span{
+	grid-column:2/3;
+}
+
 
 form>ul>li:nth-last-child(1) {
 	display: flex;
@@ -77,3 +81,4 @@ form>ul>li:nth-last-child(1) {
 form>ul>li:nth-last-child(1)>button {
 	margin-left: 3px;
 }
+
