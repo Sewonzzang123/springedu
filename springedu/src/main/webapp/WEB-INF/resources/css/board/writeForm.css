@@ -62,7 +62,8 @@ form ul>li {
 }
 
 /* form태그에서 속성을 묶으려면 cssClass로 묶어 */
-form .svr_msg{
+form .svr_msg,
+form .client_msg{
 	color:red;
 	font-weight:bold;
 	font-size:0.7em;

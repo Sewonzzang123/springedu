@@ -26,9 +26,10 @@ public class BoardController {
 	BoardSVC boardSVC;
 
 	// 게시글 작성
-	@GetMapping("/writeForm")
-	public String writeForm(Model model) {
-		model.addAttribute("boardVO", new BoardVO());
+	@GetMapping("/writeForm")//case1)
+	public String writeForm(@ModelAttribute("boardVO") BoardVO boardVO, Model model) {
+		//case2)
+		//model.addAttribute("boardVO", new BoardVO());
 		
 		return "/board/writeForm";
 	}
