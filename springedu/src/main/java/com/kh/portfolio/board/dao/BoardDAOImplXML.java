@@ -50,8 +50,10 @@ public class BoardDAOImplXML implements BoardDAO{
 	//게시글 보기 전체
 	@Override
 	public List<BoardVO> list() {
-		// TODO Auto-generated method stub
-		return null;
+		List<BoardVO> list = null;
+		
+		list = sqlSession.selectList("mappers.BoardDAO-mapper.list");
+		return list;
 	}
 	//파일 첨부
 	@Override

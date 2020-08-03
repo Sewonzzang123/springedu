@@ -4,9 +4,9 @@
 <%@ include file="/WEB-INF/views/include/common.jsp"%>
 
 <title>게시글 작성</title>
-<link rel="stylesheet" href="${contextPath }/css/board/board.css">
-<link rel="stylesheet" href="${contextPath }/css/board/writeForm.css">
-<script defer src="${contextPath }/js/board/writeForm.js"></script>
+<link rel="stylesheet" href="${contextPath }/css/main.css">
+<link rel="stylesheet" href="${contextPath }/css/board/list.css">
+<script defer src="${contextPath }/js/board/list.js"></script>
 </head>
 <body>
 	<!-- 최상위메뉴 -->
@@ -23,8 +23,54 @@
 	<main>
 		<div class="container">
 			<div class="content">
-		
-			게시판 리스트 화면
+		 <div id="boardList">
+      <div><h2>게시글 목록</h2></div>
+      <div class="wrapper">
+        <div class="head">번호</div>
+        <div class="head">분류</div>
+        <div class="head">제목</div>
+        <div class="head">작성자</div>
+        <div class="head">작성일</div>
+        <div class="head">조회수</div>
+        <c:forEach var="rec" items="${requestScope.list }">
+        <div class="rec">${rec.bnum }</div>
+        <div class="rec">${rec.boardCategoryVO.cname }</div>
+        <div class="rec">${rec.btitle }</div>
+        <div class="rec">${rec.bnickname }</div>
+        <div class="rec">${rec.bcdate }</div>
+        <div class="rec">${rec.bhit }</div>
+        </c:forEach>
+      </div>
+      <div class="btnGrp"><button id="writeBtn">글쓰기</button></div>
+      <div class="paging">
+        <div></div>
+        <div>첫 페이지</div>
+        <div>이전 페이지</div>
+        <div><a>1</a></div>
+        <div><a>2</a></div>
+        <div><a>3</a></div>
+        <div><a>4</a></div>
+        <div><a>5</a></div>
+        <div><a>6</a></div>
+        <div><a>7</a></div>
+        <div><a>8</a></div>
+        <div><a>9</a></div>
+        <div>다음 페이지</div>
+        <div>끝 페이지</div>
+      </div>
+      <div class="find">
+        <form method="POST" action="">
+          <select name="" id="">
+            <option value="">제목</option>
+            <option value="">내용</option>
+            <option value="">제목+내용</option>
+            <option value="">작성자</option>
+          </select>
+          <input type="text" />
+          <button id="findBtn" type="button">검색</button>
+        </form>
+      </div>
+    </div>
 			
 			</form></div>
 		</div>
