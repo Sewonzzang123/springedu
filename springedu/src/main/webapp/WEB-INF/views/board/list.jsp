@@ -5,7 +5,7 @@
 
 <title>게시글 작성</title>
 <link rel="stylesheet" href="${contextPath }/css/main.css">
-<link rel="stylesheet" href="${contextPath }/css/board/list.css">
+<link rel="stylesheet" href="${contextPath }/css/board/list.css?ver=2">
 <script defer src="${contextPath }/js/board/list.js"></script>
 </head>
 <body>
@@ -35,7 +35,7 @@
         <c:forEach var="rec" items="${requestScope.list }">
         <div class="rec">${rec.bnum }</div>
         <div class="rec">${rec.boardCategoryVO.cname }</div>
-        <div class="rec">${rec.btitle }</div>
+        <div class="rec"><a href="./view/${rec.bnum }">${rec.btitle }</a></div>
         <div class="rec">${rec.bnickname }</div>
         <div class="rec">${rec.bcdate }</div>
         <div class="rec">${rec.bhit }</div>

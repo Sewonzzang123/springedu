@@ -74,12 +74,15 @@ form>ul>li span{
 }
 
 
-form>ul>li:nth-last-child(1) {
+form>ul>li.btnGrp {
 	display: flex;
 	justify-content: flex-end;
 }
 
-form>ul>li:nth-last-child(1)>button {
+form>ul>li.btnGrp>button {
 	margin-left: 3px;
 }
 
+form ul>li.umode{
+	display: none;
+}

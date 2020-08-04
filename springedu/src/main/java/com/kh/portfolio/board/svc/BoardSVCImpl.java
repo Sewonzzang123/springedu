@@ -1,7 +1,9 @@
 package com.kh.portfolio.board.svc;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -86,9 +88,25 @@ public class BoardSVCImpl implements BoardSVC {
 
 //보기
 	@Override
-	public BoardVO view(String bnum) {
-
-		return null;
+	public Map<String, Object> view(String bnum) {
+		BoardVO boardVO = null;
+		List<BoardFileVO> files = null;
+		
+		//1)게시글 가져오기
+		boardVO = boardDAO.view(bnum);
+		
+		//2) 첨부파일 가져오기
+		files = boardDAO.getFiles(bnum);
+		
+		//3) 조회수 +1
+		boardDAO.updateBhit(bnum);
+		//map에담아서 한번에 보내기
+		Map<String, Object> map = new HashMap<>();
+		map.put("board", boardVO);
+		if(files !=null && files.size()>0) {
+		map.put("files", files);
+		}
+		return map;
 	}
 
 //보기 전체

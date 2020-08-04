@@ -1,5 +1,7 @@
 package com.kh.portpolio.board.DAO;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.junit.jupiter.api.Assertions;
@@ -14,6 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.kh.portfolio.board.dao.BoardDAO;
 import com.kh.portfolio.board.vo.BoardCategoryVO;
+import com.kh.portfolio.board.vo.BoardFileVO;
 import com.kh.portfolio.board.vo.BoardVO;
 
 @ExtendWith(SpringExtension.class)
@@ -49,6 +52,36 @@ public class BoardDAOImplXMLTEST {
 		Assertions.assertEquals(1, result);
 	}
 	
+	@Test
+	@DisplayName("게시글 보기")
+	@Disabled
+	void view() {
+		String bnum="68";
+		
+		BoardVO boardVO = boardDAO.view(bnum);
+		logger.info("boardVO:"+ boardVO.toString());
+	}
+
+	@Test
+	@DisplayName("첨부파일조회")
+	@Disabled
+	void getFiles() {
+		String bnum="2";
+		List<BoardFileVO> list = boardDAO.getFiles(bnum);
+		
+		list.stream().forEach(System.out::println);
+		logger.info(""+list.size());
+	}
 	
-	
+	@Test
+	@DisplayName("조회수 증가")
+	@Disabled
+	void updateBhit() {
+		String bnum="20";
+		int preBhit = boardDAO.view(bnum).getBhit();
+		boardDAO.updateBhit(bnum);
+		int postBhit =boardDAO.view(bnum).getBhit();
+		Assertions.assertEquals(1, postBhit-preBhit);
+		
+	}
 }

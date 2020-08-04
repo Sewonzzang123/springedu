@@ -10,8 +10,8 @@
 	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
 	crossorigin="anonymous">
 <link rel="stylesheet" href="${contextPath }/css/board/board.css">
-<link rel="stylesheet" href="${contextPath }/css/board/writeForm.css?ver=1">
-<script defer src="${contextPath }/js/board/writeForm.js?ver=2"></script>
+<link rel="stylesheet" href="${contextPath }/css/board/writeForm.css">
+<script defer src="${contextPath }/js/board/writeForm.js?ver=22"></script>
 
 </head>
 <body>
@@ -33,7 +33,8 @@
 			<div class="content">
 				<!-- 아이디는 파일이름이랑 다르게 설정해야한다. -->
 				<form:form id="writeFrm" method="POST"
-					action="${contextPath }/board/write" enctype="multipart/form-data"
+					action="${contextPath }/board/write" 
+					enctype="multipart/form-data"
 					modelAttribute="boardVO">
 					<legend>게시글 작성</legend>
 					<ul>

@@ -18,6 +18,10 @@ public interface BoardDAO {
 	List<BoardVO> list();
 	//파일첨부
 	int addFile(BoardFileVO boardFileVO);
+	//첨부파일 가져오기
+	List<BoardFileVO> getFiles(String bnum);
+	//조회수 +1 증가하기
+	void updateBhit(String bnum);
 
 	
 }

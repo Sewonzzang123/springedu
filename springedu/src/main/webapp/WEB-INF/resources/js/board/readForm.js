@@ -1,15 +1,20 @@
-const writeBtn = document.getElementById("writeBtn");
+const replyBtn = document.getElementById("replyBtn");
 const cancelBtn = document.getElementById("cancelBtn");
 const listBtn = document.getElementById("listBtn");
-const writeFrm = document.getElementById("writeFrm");
+const modifyBtn = document.getElementById("modifyBtn");
+const saveBtn = document.getElementById("saveBtn");
+const deleteBtn = document.getElementById("deleteBtn");
 
-writeBtn.addEventListener("click", writeBtn_f);
-cancelBtn.addEventListener("click", cancelBtn_f);
-listBtn.addEventListener("click", listBtn_f);
+if(replyBtn){replyBtn.addEventListener("click", replyBtn_f);}
+if(cancelBtn){cancelBtn.addEventListener("click", cancelBtn_f);}
+if(listBtn){listBtn.addEventListener("click", listBtn_f);}
+if(modifyBtn){modifyBtn.addEventListener("click", modifyBtn_f);}
+if(saveBtn){saveBtn.addEventListener("click", saveBtn_f);}
+if(deleteBtn){deleteBtn.addEventListener("click", deleteBtn_f);}
 
-function writeBtn_f(e) {
+function modifyBtn_f(e) {
   e.preventDefault();
-  console.log("writeBtn_f");
+  console.log("등록");
 
   //1)유효성 체크
 
@@ -27,7 +32,7 @@ function cancelBtn_f(e) {
 function listBtn_f(e) {
   console.log("listBtn_f");
   //목록리스트로 이동
-  location.href = "../board/list";
+  location.href = "/portfolio/board/list";
 }
 //유효성 체크
 function checkValidation() {

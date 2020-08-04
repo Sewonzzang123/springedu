@@ -1,14 +1,27 @@
 @charset "UTF-8";
 
+#boardList {
+	margin: 50px 0;
+}
+
 #boardList .wrapper {
 	display: grid;
 	grid-template-columns: 1fr 2fr 6fr 2fr 1fr 1fr;
 	grid-auto-rows: minmax(20px, auto);
+	border-top: 1px solid;
+	border-left: 1px solid;
 }
 
 #boardList .wrapper div {
-	border: 1px solid gray;
+	border-right: 1px solid;
+	border-bottom: 1px solid;
 }
+
+/*게시글 타이틀 폰트 굵기 */
+#boardList>div h2 {
+	font-weight: 700;
+}
+
 /* 게시글 컬럼 제목 */
 #boardList .wrapper .head {
 	font-size: 0.8em;
@@ -28,7 +41,7 @@
 #boardList>div {
 	display: flex;
 	justify-content: center;
-	padding:10px;
+	padding: 10px 0;
 }
 /* 버튼 그룹 */
 #boardList .btnGrp {

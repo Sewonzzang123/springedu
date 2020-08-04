@@ -44,8 +44,9 @@ public class BoardDAOImplXML implements BoardDAO{
 	//게시글 보기
 	@Override
 	public BoardVO view(String bnum) {
-		// TODO Auto-generated method stub
-		return null;
+		BoardVO boardVO = null;
+		boardVO = sqlSession.selectOne("mappers.BoardDAO-mapper.view", Long.valueOf(bnum));
+		return boardVO;
 	}
 	//게시글 보기 전체
 	@Override
@@ -61,6 +62,17 @@ public class BoardDAOImplXML implements BoardDAO{
 		int result = 0;
 		result = sqlSession.insert("mappers.BoardDAO-mapper.addFile",boardFileVO);
 		return 0;
+	}
+	@Override
+	public List<BoardFileVO> getFiles(String bnum) {
+		List<BoardFileVO> list = null;
+		list = sqlSession.selectList("mappers.BoardDAO-mapper.getFiles",Long.valueOf(bnum));
+		return list;
+	}
+	@Override
+	public void updateBhit(String bnum) {
+		sqlSession.update("mappers.BoardDAO-mapper.updateBhit", Long.valueOf(bnum));
+		
 	}
 
 }
