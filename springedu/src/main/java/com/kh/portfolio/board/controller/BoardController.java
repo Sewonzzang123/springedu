@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.portfolio.board.svc.BoardSVC;
+import com.kh.portfolio.board.vo.BoardCategoryVO;
 import com.kh.portfolio.board.vo.BoardFileVO;
 import com.kh.portfolio.board.vo.BoardVO;
 
@@ -29,28 +30,38 @@ public class BoardController {
 
 	@Inject
 	BoardSVC boardSVC;
+	
+	//게시글 카테고리 불러오기 >> 컨트롤러 안의 모든 뷰 페이지 내에서 boardCategoryVO로 공유가 가능함
+	@ModelAttribute("boardCategory")
+	public List<BoardCategoryVO> getCategory() {
+		return  boardSVC.getCategory();
+	}
 
 	// 게시글 작성
-	@GetMapping("/writeForm")//case1)
-	public String writeForm(@ModelAttribute("boardVO") BoardVO boardVO, Model model) {
+	@GetMapping("/writeForm")//case1) jsp에 form태그에서 ModelAttribute가없으면 안돼
+	public String writeForm(@ModelAttribute("boardVO") BoardVO boardVO,
+			Model model) {
 		//case2)
 		//model.addAttribute("boardVO", new BoardVO());
 		
+	
 		return "/board/writeForm";
 	}
 
 	// 게시글 작성 처리
-	@PostMapping("/write")
-	public String write(@Valid BoardVO boardVO, BindingResult result, Model model) {
+	@PostMapping("/write")//vaild 유효성체크
+	public String write(@Valid @ModelAttribute("boardVO") BoardVO boardVO, 
+			BindingResult result
+			//Model model 
+			) {
 
 		if (result.hasErrors()) {
 			return "/board/writeForm";
 		}
 		
 		 boardSVC.write(boardVO);
-		 model.addAttribute("list", boardSVC.list());
 		 
-		return "/board/list";
+		return "redirect:/board/list";
 	}
 
 	// 게시글 리스트
@@ -79,4 +90,11 @@ public class BoardController {
 		return "/board/readForm";
 	}
 
+	//게시글 삭제
+	@GetMapping("/delete/{bnum}")
+	public String delete(@PathVariable("bnum") String bnum) {
+		boardSVC.delete(bnum);
+		
+		return "redirect:/board/list";
+		}
 }

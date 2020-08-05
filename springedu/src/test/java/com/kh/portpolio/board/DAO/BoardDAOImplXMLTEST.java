@@ -30,6 +30,26 @@ public class BoardDAOImplXMLTEST {
 	BoardDAO boardDAO;
 	
 	@Test
+	@DisplayName("게시판 카테고리 불러오기")
+	@Disabled
+	void getCategory() {
+		List<BoardCategoryVO> list = null;
+		
+		list = boardDAO.getCategory();
+		//for문
+//		for(BoardCategoryVO boardCategoryVO: list )
+//		{
+//		logger.info(boardCategoryVO.getCname());
+//		}
+//		//스트림 사용(람다식)
+//		list.stream().forEach(boardCategoryVO->{
+//			System.out.println(boardCategoryVO);
+//		});
+		//메소드
+		list.stream().forEach(System.out::println);
+	}
+	
+	@Test
 	@DisplayName("게시글 작성")
 	@Disabled
 	void write() {
@@ -83,5 +103,22 @@ public class BoardDAOImplXMLTEST {
 		int postBhit =boardDAO.view(bnum).getBhit();
 		Assertions.assertEquals(1, postBhit-preBhit);
 		
+	}
+	
+	@Test
+	@DisplayName("게시글 삭제")
+	@Disabled
+	void delete() {
+		String bnum="42";
+		int result = boardDAO.delete(bnum);
+		Assertions.assertEquals(1,result);
+	}
+	
+	@Test
+	@DisplayName("첨부파일 개별 삭제")
+	void fileDelete() {
+		String fid="41";
+		int result = boardDAO.deleteFile(fid);
+		Assertions.assertEquals(1,result);
 	}
 }

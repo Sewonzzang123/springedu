@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.kh.portfolio.board.vo.BoardCategoryVO;
 import com.kh.portfolio.board.vo.BoardFileVO;
 import com.kh.portfolio.board.vo.BoardVO;
 
@@ -20,6 +21,13 @@ public class BoardDAOImplXML implements BoardDAO{
 	@Inject
 	SqlSession sqlSession;
 	
+	//게시판 카테고리 읽어오기
+	@Override
+	public List<BoardCategoryVO> getCategory() {
+		List<BoardCategoryVO> list = null;
+		list = sqlSession.selectList("mappers.BoardDAO-mapper.getCategory");
+		return list;
+	}
 	//게시글 작성
 	@Override
 	public int write(BoardVO boardVO) {
@@ -32,15 +40,24 @@ public class BoardDAOImplXML implements BoardDAO{
 	//게시글 수정
 	@Override
 	public int modify(BoardVO boardVO) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 	//게시글 삭제
 	@Override
 	public int delete(String bnum) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		result = sqlSession.delete("mappers.BoardDAO-mapper.delete", Long.valueOf(bnum));
+		return result;
 	}
+	//게시글 첨부파일 개별 삭제
+	@Override
+	public int deleteFile(String fid) {
+		int result = 0;
+		result = sqlSession.delete("mappers.BoardDAO-mapper.deleteFile", Long.valueOf(fid));
+		return result;
+	}
+
 	//게시글 보기
 	@Override
 	public BoardVO view(String bnum) {
@@ -74,5 +91,7 @@ public class BoardDAOImplXML implements BoardDAO{
 		sqlSession.update("mappers.BoardDAO-mapper.updateBhit", Long.valueOf(bnum));
 		
 	}
+
+
 
 }

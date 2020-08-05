@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappers.BoardDAO-mapper">
+	<!-- 게시글 분류코드 읽어오기 -->
+	<select id="getCategory"
+		resultType="com.kh.portfolio.board.vo.BoardCategoryVO">
+		select cid, cname
+		from board_category
+	</select>
 	<!-- 게시글 작성 -->
 	<insert id="write"
 		parameterType="com.kh.portfolio.board.vo.BoardVO">
@@ -56,6 +62,15 @@
 	<!-- 게시글 수정 -->
 
 	<!-- 게시글 삭제 -->
+	<delete id="delete" parameterType="long">
+	delete from board
+	where bnum=${bnum}
+	</delete>
+	<!-- 첨부파일 개별 삭제 -->
+	<delete id="deleteFile" parameterType="long">
+	delete from board_upload_file
+	where fid=${fid}
+	</delete>
 
 	<!-- 게시글 보기 -->
 	<select id="view" parameterType="long"
@@ -63,7 +78,8 @@
 
 		SELECT t1.bnum,
 		t2.cid as "boardCategoryVO.cid",
-		t2.cname as "boardCategoryVO.cname",
+		t2.cname as
+		"boardCategoryVO.cname",
 		t1.btitle,
 		t1.bid,
 		t1.bnickname,
@@ -74,22 +90,27 @@
 		t1.bgroup,
 		t1.bstep,
 		t1.bindent
-		FROM board t1, board_category t2
+		FROM board
+		t1, board_category t2
 		where t1.bcategory = t2.cid
 		and t1.bnum = #{bnum}
 
 	</select>
 	<!-- 파일 불러오기 -->
-	<select id="getFiles" resultType="com.kh.portfolio.board.vo.BoardFileVO" parameterType="Long">
-	  select fid, bnum, fname, fsize, ftype, fdata, cdate, udate
-    from board_upload_file
-    where bnum=${bnum}
+	<select id="getFiles"
+		resultType="com.kh.portfolio.board.vo.BoardFileVO"
+		parameterType="Long">
+		select fid, bnum, fname, fsize, ftype, fdata, cdate,
+		udate
+		from board_upload_file
+		where bnum=${bnum}
 	</select>
 	<!-- 조회수 증가 -->
 	<update id="updateBhit" parameterType="Long">
-	update board
-	set bhit=bhit+1
-	where bnum=${bnum}
+		update board
+		set
+		bhit=bhit+1
+		where bnum=${bnum}
 	</update>
 	<!-- 게시글 목록 -->
 	<select id="list" resultType="com.kh.portfolio.board.vo.BoardVO">

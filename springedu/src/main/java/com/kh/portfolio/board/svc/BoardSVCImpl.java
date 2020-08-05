@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.portfolio.board.dao.BoardDAO;
+import com.kh.portfolio.board.vo.BoardCategoryVO;
 import com.kh.portfolio.board.vo.BoardFileVO;
 import com.kh.portfolio.board.vo.BoardVO;
 
@@ -83,8 +84,15 @@ public class BoardSVCImpl implements BoardSVC {
 	@Override
 	public int delete(String bnum) {
 
-		return 0;
+		return boardDAO.delete(bnum);
 	}
+	//게시글 첨부파일 개별 삭제
+	@Override
+	public int deleteFile(String fid) {
+		
+		return boardDAO.deleteFile(fid);
+	}
+
 
 //보기
 	@Override
@@ -117,5 +125,12 @@ public class BoardSVCImpl implements BoardSVC {
 		list = boardDAO.list();
 		return list;
 	}
+
+	@Override
+	public List<BoardCategoryVO> getCategory() {
+
+		return boardDAO.getCategory();
+	}
+
 
 }

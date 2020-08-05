@@ -38,12 +38,13 @@
 					modelAttribute="boardVO">
 					<legend>게시글 작성</legend>
 					<ul>
-						<li><form:label path="boardCategoryVO.cid">분류</form:label> <form:select
-								path="boardCategoryVO.cid">
-								<form:option value="0">선택</form:option>
-								<form:option value="1001">spring</form:option>
-								<form:option value="1002">database</form:option>
-								<form:option value="1003">java</form:option>
+						<li><form:label path="boardCategoryVO.cid">분류</form:label> 
+						<form:select path="boardCategoryVO.cid">
+								<option value="0">선택<option>
+								<form:options path="boardCategoryVO.cid" 
+															items="${boardCategory }" 
+															itemValue="cid"
+															itemLabel="cname"/>
 							</form:select> 
 							<span class="client_msg" id="boardCategoryVO.cid.error"></span>
 							<form:errors cssClass="svr_msg" path="boardCategoryVO.cid" /></li>

@@ -1,9 +1,14 @@
 const replyBtn = document.getElementById("replyBtn");
 const cancelBtn = document.getElementById("cancelBtn");
-const listBtn = document.getElementById("listBtn");
+
 const modifyBtn = document.getElementById("modifyBtn");
 const saveBtn = document.getElementById("saveBtn");
 const deleteBtn = document.getElementById("deleteBtn");
+
+//공통 버튼
+const listBtn = document.getElementById("listBtn");
+
+changeMode(false); //읽기모드
 
 if(replyBtn){replyBtn.addEventListener("click", replyBtn_f);}
 if(cancelBtn){cancelBtn.addEventListener("click", cancelBtn_f);}
@@ -12,27 +17,76 @@ if(modifyBtn){modifyBtn.addEventListener("click", modifyBtn_f);}
 if(saveBtn){saveBtn.addEventListener("click", saveBtn_f);}
 if(deleteBtn){deleteBtn.addEventListener("click", deleteBtn_f);}
 
-function modifyBtn_f(e) {
-  e.preventDefault();
-  console.log("등록");
 
-  //1)유효성 체크
-
-  if (!checkValidation()) {
-    return false;
-  }
-  //2)서버 전송
-	writeFrm.submit();
+function saveBtn_f(e) {
+  console.log("saveBtn_f");
 }
+
 function cancelBtn_f(e) {
+	e.preventDefault();
+	
   console.log("cancelBtn_f");
-  //입력한 내용 clear
-  writeFrm.reset();
+  
+  //수정모드 -> 읽기모드
+  changeMode(false);
 }
+
 function listBtn_f(e) {
   console.log("listBtn_f");
   //목록리스트로 이동
   location.href = "/portfolio/board/list";
+}
+//답글
+function replyBtn_f(e){
+console.log("replyBtn_f");
+
+}
+//수정
+function modifyBtn_f(e){
+console.log("modifyBtn_f");
+	changeMode(true);//수정모드
+}
+
+
+function changeMode(modeFlag){
+	const rmodes = document.getElementsByClassName("rmode");
+	const umodes = document.getElementsByClassName("umode");
+	//읽기모드->수정모드
+	if(modeFlag){
+	
+	//제목변경 ->게시글 보기
+	document.getElementById('title').textContent = '게시글 수정';
+	//카테고리, 제목, 내용 활성화
+	document.getElementById('boardCategoryVO.cid').removeAttribute('disabled');
+	document.getElementById('btitle').removeAttribute('readonly');
+	document.getElementById('bcontent').removeAttribute('readonly');
+	
+	Array.from(rmodes).forEach(rmodes=>{rmodes.style.display="none";});
+	Array.from(umodes).forEach(umodes=>{umodes.style.display="block";});
+	
+	modeFlag = false;
+	//수정모드 ->읽기모드
+	}else{
+	document.getElementById('title').textContent = '게시글 보기';
+	//카테고리, 제목, 내용 비활성화
+	document.getElementById('boardCategoryVO.cid').setAttribute('disabled', true);
+	document.getElementById('btitle').setAttribute('readonly', true);
+	document.getElementById('bcontent').setAttribute('readonly', true);
+	
+	Array.from(umodes).forEach(umodes=>{umodes.style.display="none";});
+	Array.from(rmodes).forEach(rmodes=>{rmodes.style.display="block";});
+		modeFlag = true;
+	}
+
+}
+//삭제
+function deleteBtn_f(e){
+if(confirm("삭제하시겠습니까?")){
+const bnum= e.target.getAttribute("data-bnum");
+const url = `/portfolio/board/delete/${bnum}`;
+window.location.href=url;
+}
+
 }
 //유효성 체크
 function checkValidation() {
