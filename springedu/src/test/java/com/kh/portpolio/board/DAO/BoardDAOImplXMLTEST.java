@@ -116,9 +116,37 @@ public class BoardDAOImplXMLTEST {
 	
 	@Test
 	@DisplayName("첨부파일 개별 삭제")
+	@Disabled
 	void fileDelete() {
 		String fid="41";
 		int result = boardDAO.deleteFile(fid);
 		Assertions.assertEquals(1,result);
+	}
+	
+	@Test
+	@DisplayName("첨부파일 다운로드")
+	@Disabled
+	void viewFile() {
+		String fid="42";
+		BoardFileVO boardFileVO = boardDAO.viewFile(fid);
+		logger.info(boardFileVO.toString());		
+	}
+	
+	@Test
+	@DisplayName("게시글 수정")
+	void modify() {
+		BoardVO boardVO = new BoardVO();
+		BoardCategoryVO boardCategoryVO = new BoardCategoryVO();
+		
+		boardVO.setBoardCategoryVO(boardCategoryVO);
+		boardVO.getBoardCategoryVO().setCid(1001);
+		boardVO.setBnum(44);
+		boardVO.setBtitle("수정된 제목");
+		boardVO.setBcontent("수정된 내용");
+		
+		Assertions.assertEquals(1,boardDAO.modify(boardVO));
+		
+
+		
 	}
 }

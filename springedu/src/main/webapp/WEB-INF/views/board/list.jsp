@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/views/include/common.jsp"%>
 
 <title>게시글 작성</title>
-<link rel="stylesheet" href="${contextPath }/css/main.css">
+<link rel="stylesheet" href="${contextPath }/css/main.css?ver=1">
 <link rel="stylesheet" href="${contextPath }/css/board/list.css?ver=2">
 <script defer src="${contextPath }/js/board/list.js"></script>
 </head>

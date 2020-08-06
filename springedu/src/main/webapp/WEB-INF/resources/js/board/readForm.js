@@ -20,6 +20,14 @@ if(deleteBtn){deleteBtn.addEventListener("click", deleteBtn_f);}
 
 function saveBtn_f(e) {
   console.log("saveBtn_f");
+  
+  e.preventDefault();
+  
+  if (!checkValidation()) {
+    return false;
+  }
+  
+  writeFrm.submit();
 }
 
 function cancelBtn_f(e) {
@@ -29,6 +37,7 @@ function cancelBtn_f(e) {
   
   //수정모드 -> 읽기모드
   changeMode(false);
+  writeFrm.reset();
 }
 
 function listBtn_f(e) {

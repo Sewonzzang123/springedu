@@ -16,6 +16,7 @@ import lombok.Data;
 @Entity
 @Data
 public class BoardVO {
+	
 	private long bnum;//	BNUM	NUMBER(10,0)	No		1	게시글번호
 	
 	//참조하는게 있는경우에사용, 계층형 유효성 검사시 반드시 추가해주기!!
@@ -45,5 +46,7 @@ public class BoardVO {
 	
 	//첨부파일
 	private List<MultipartFile> files;
+	
+	
 	
 }

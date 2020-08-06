@@ -9,10 +9,10 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
 	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
 	crossorigin="anonymous">
-<link rel="stylesheet" href="${contextPath }/css/board/board.css">
+<link rel="stylesheet" href="${contextPath }/css/main.css?ver=2">
 <link rel="stylesheet"
-	href="${contextPath }/css/board/readForm.css?ver=1">
-<script defer src="${contextPath }/js/board/readForm.js?ver=1"></script>
+	href="${contextPath }/css/board/readForm.css?ver=123">
+<script defer src="${contextPath }/js/board/readForm.js"></script>
 
 </head>
 <body>
@@ -34,8 +34,9 @@
 			<div class="content">
 				<!-- 아이디는 파일이름이랑 다르게 설정해야한다. -->
 				<form:form id="writeFrm" method="POST"
-					action="${contextPath }/board/write" enctype="multipart/form-data"
+					action="${contextPath }/board/modify" enctype="multipart/form-data"
 					modelAttribute="boardVO">
+					<form:hidden path="bnum"/>
 					<legend id="title">게시글 보기</legend>
 					<ul>
 						<li><form:label path="boardCategoryVO.cid">분류</form:label> 
@@ -86,10 +87,13 @@
 						<li>
 							<form:label path="">첨부목록</form:label> 
 							<c:if test="${!empty files }">
-								<div>
+								<div class="filelist">
 									<c:forEach var="file" items="${requestScope.files }">
-										<a href="#">${file.fname }</a>
-										<span>${file.fsize/1000} kb</span>
+									<p style="display:flex">
+										<a href="${contextPath }/board/file/${file.fid}">${file.fname }</a>
+										<span> (${file.fsize/1000} kb)</span>			
+										<span  class="umode"><i style="padding-left: 3px" class="fas fa-backspace"></i></span>			
+									</p>
 									</c:forEach>
 								</div>
 							</c:if> 

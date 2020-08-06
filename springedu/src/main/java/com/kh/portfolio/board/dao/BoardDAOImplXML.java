@@ -41,7 +41,7 @@ public class BoardDAOImplXML implements BoardDAO{
 	@Override
 	public int modify(BoardVO boardVO) {
 		
-		return 0;
+		return sqlSession.update("mappers.BoardDAO-mapper.modify",boardVO);
 	}
 	//게시글 삭제
 	@Override
@@ -90,6 +90,13 @@ public class BoardDAOImplXML implements BoardDAO{
 	public void updateBhit(String bnum) {
 		sqlSession.update("mappers.BoardDAO-mapper.updateBhit", Long.valueOf(bnum));
 		
+	}
+	//첨부파일 다운로드
+	@Override
+	public BoardFileVO viewFile(String fid) {
+		BoardFileVO boardFileVO = null;
+		boardFileVO = sqlSession.selectOne("mappers.BoardDAO-mapper.viewFile", Long.valueOf(fid));
+		return boardFileVO;
 	}
 
 

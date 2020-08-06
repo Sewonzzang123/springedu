@@ -86,3 +86,7 @@ form>ul>li.btnGrp>button {
 form ul>li.umode{
 	display: none;
 }
+
+.filelist p{
+	margin-bottom:0px;
+}
