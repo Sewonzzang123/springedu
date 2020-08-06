@@ -29,6 +29,8 @@ public interface BoardDAO {
 	void updateBhit(String bnum);
 	//첨부파일 다운로드
 	BoardFileVO viewFile(String fid);
+	//답글 작성
+	int reply(BoardVO boardVO);
 
 	
 }

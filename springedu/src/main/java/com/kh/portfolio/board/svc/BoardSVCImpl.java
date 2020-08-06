@@ -148,6 +148,22 @@ public class BoardSVCImpl implements BoardSVC {
 		
 		return boardDAO.viewFile(fid);
 	}
+	
+	//답글 작성
+	@Override
+	@Transactional
+	public int reply(BoardVO boardVO) {
+		int result = 0;
+		
+		result = boardDAO.reply(boardVO);
+		//첨부파일 추가
+		List<MultipartFile> files = boardVO.getFiles();
+		if (files != null && boardVO.getFiles().size() > 0) {
+			addFiles(files, boardVO.getBnum());
+		}
+		
+		return result;
+	}
 
 
 

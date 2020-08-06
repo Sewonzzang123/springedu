@@ -134,6 +134,7 @@ public class BoardDAOImplXMLTEST {
 	
 	@Test
 	@DisplayName("게시글 수정")
+	@Disabled
 	void modify() {
 		BoardVO boardVO = new BoardVO();
 		BoardCategoryVO boardCategoryVO = new BoardCategoryVO();
@@ -148,5 +149,34 @@ public class BoardDAOImplXMLTEST {
 		
 
 		
+	}
+	
+	@Test
+	@DisplayName("답글 작성")
+//	@Disabled
+	void reply() {
+//		#{boardCategoryVO.cid},
+//		#{btitle},
+//		#{bid},
+//		#{bnickname},
+//		#{bcontent},
+//		board_bnum_seq.nextval,
+//		#{bstep}+1,
+//		#{bindent}+1)
+	BoardVO boardVO = new BoardVO();
+	BoardCategoryVO boardCategoryVO = new BoardCategoryVO();
+	
+	boardVO.setBoardCategoryVO(boardCategoryVO);
+	boardVO.getBoardCategoryVO().setCid(1001);
+	boardVO.setBtitle("답글의답글 제목1");
+	boardVO.setBid("sewon0618@naver.com");
+	boardVO.setBcontent("답글 내용1");
+	boardVO.setBgroup(68);
+	boardVO.setBstep(1);
+	boardVO.setBindent(1);
+	logger.info(boardVO.toString());
+	int result = boardDAO.reply(boardVO);
+	
+	Assertions.assertEquals(1, result);
 	}
 }

@@ -7,6 +7,7 @@ const deleteBtn = document.getElementById("deleteBtn");
 
 //공통 버튼
 const listBtn = document.getElementById("listBtn");
+const fileList = document.getElementById("fileList");
 
 changeMode(false); //읽기모드
 
@@ -16,7 +17,7 @@ if(listBtn){listBtn.addEventListener("click", listBtn_f);}
 if(modifyBtn){modifyBtn.addEventListener("click", modifyBtn_f);}
 if(saveBtn){saveBtn.addEventListener("click", saveBtn_f);}
 if(deleteBtn){deleteBtn.addEventListener("click", deleteBtn_f);}
-
+if(fileList){fileList.addEventListener("click", fileList_f);}
 
 function saveBtn_f(e) {
   console.log("saveBtn_f");
@@ -71,7 +72,7 @@ function changeMode(modeFlag){
 	document.getElementById('bcontent').removeAttribute('readonly');
 	
 	Array.from(rmodes).forEach(rmodes=>{rmodes.style.display="none";});
-	Array.from(umodes).forEach(umodes=>{umodes.style.display="block";});
+	Array.from(umodes).forEach(umodes=>{umodes.style.display="grid";});
 	
 	modeFlag = false;
 	//수정모드 ->읽기모드
@@ -83,7 +84,7 @@ function changeMode(modeFlag){
 	document.getElementById('bcontent').setAttribute('readonly', true);
 	
 	Array.from(umodes).forEach(umodes=>{umodes.style.display="none";});
-	Array.from(rmodes).forEach(rmodes=>{rmodes.style.display="block";});
+	Array.from(rmodes).forEach(rmodes=>{rmodes.style.display="grid";});
 		modeFlag = true;
 	}
 
@@ -153,4 +154,41 @@ function checkValidation() {
 	
 	
   return true;
+}
+
+//파일 삭제
+function fileList_f(e){
+//이벤트 소스 요소
+let iTag = e.target;
+//이벤트를 등록한 요소
+let fid = e.target.getAttribute("data-fid");
+
+
+if(e.target.tagName !== 'I'){return false;}
+if(!confirm('삭제하시겠습니까?')){return false;}
+
+
+
+//AJAX 사용
+//1) XMLHttpRequest 객체 생성
+const xhttp = new XMLHttpRequest();
+
+//2) 서비스 요청
+const url = `http://localhost:9080/portfolio/board/file/${fid}`;
+xhttp.open("DELETE",url);
+xhttp.send();
+
+//3)서버 응답 처리
+xhttp.addEventListener("readystatechange",ajaxCall);
+function ajaxCall(e){
+	if(this.readyState == 4 && this.status==200){
+		//서버에서 파일 삭제를 처리했으면 
+		if(this.responseText == "success"){
+		let pTag = iTag.parentElement.parentElement.parentElement;
+		fileList.removeChild(pTag);
+			
+		}else{console.log('삭제실패');}
+	}
+}
+
 }

@@ -59,6 +59,7 @@
 		#{fdata}
 		)
 	</insert>
+
 	<!-- 게시글 수정 -->
 	<update id="modify" parameterType="com.kh.portfolio.board.vo.BoardVO">
 	update board
@@ -130,10 +131,14 @@
 		t1.btitle,
 		t1.bnickname,
 		t1.bcdate,
-		t1.bhit
+		t1.bhit,
+		t1.bindent
 		from board t1, board_category t2
 		where
 		t1.bcategory = t2.cid
+		order by 
+		t1.bgroup desc, 
+		t1.bstep asc
 
 	</select>
 	<!-- 첨부파일 다운로드 -->
@@ -143,4 +148,42 @@
 		from board_upload_file
 		where fid=${fid}
 	</select>
+	
+		<!-- 답글 작성 -->
+		<insert id="reply"
+		parameterType="com.kh.portfolio.board.vo.BoardVO">
+		insert into board(
+		bnum,
+		bcategory,
+		btitle,
+		bid,
+		bnickname,
+		bcontent,
+		bgroup,
+		bstep,
+		bindent)
+		values (
+		board_bnum_seq.nextval,
+		#{boardCategoryVO.cid},
+		#{btitle},
+		#{bid},
+		#{bnickname},
+		#{bcontent},
+		${bgroup},
+		#{bstep}+1,
+		#{bindent}+1)
+		
+				<!-- 게시글 생성후 게시글번호가 생성되고 이 생성된 번호를 읽어온다. BoardVO.setBnum() -->
+		<selectKey keyProperty="bnum" resultType="long"
+			order="AFTER">
+			select board_bnum_seq.currval
+			from dual
+		</selectKey>
+		</insert>
+		<!-- step 업데이트 -->
+		<update id="updateStep" parameterType="map">	
+		update board
+		set bstep = bstep+1
+		where bgroup=${bgroup} and bstep > ${bstep}
+		</update>
 </mapper>

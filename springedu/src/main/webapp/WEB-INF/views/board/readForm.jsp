@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="${contextPath }/css/main.css?ver=2">
 <link rel="stylesheet"
 	href="${contextPath }/css/board/readForm.css?ver=123">
-<script defer src="${contextPath }/js/board/readForm.js"></script>
+<script defer src="${contextPath }/js/board/readForm.js?ver=1"></script>
 
 </head>
 <body>
@@ -87,12 +87,14 @@
 						<li>
 							<form:label path="">첨부목록</form:label> 
 							<c:if test="${!empty files }">
-								<div class="filelist">
+								<div id="fileList">
 									<c:forEach var="file" items="${requestScope.files }">
 									<p style="display:flex">
 										<a href="${contextPath }/board/file/${file.fid}">${file.fname }</a>
 										<span> (${file.fsize/1000} kb)</span>			
-										<span  class="umode"><i style="padding-left: 3px" class="fas fa-backspace"></i></span>			
+										<span class="umode">
+										<a href="#"><i style="padding-left: 3px" class="fas fa-backspace" data-fid="${file.fid }"></i></a>
+										</span>			
 									</p>
 									</c:forEach>
 								</div>

@@ -1,6 +1,8 @@
 package com.kh.portfolio.board.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -98,7 +100,25 @@ public class BoardDAOImplXML implements BoardDAO{
 		boardFileVO = sqlSession.selectOne("mappers.BoardDAO-mapper.viewFile", Long.valueOf(fid));
 		return boardFileVO;
 	}
-
+	//답글 작성
+	@Override
+	public int reply(BoardVO boardVO) {
+		//이전 답글 step update
+		//최초원글 답글 중 부모글보다 답글단게가 큰 경우 +1 증가
+		updateStep(boardVO.getBgroup(), boardVO.getBstep());
+		
+		
+		//답글 달기
+		return sqlSession.insert("mappers.BoardDAO-mapper.reply", boardVO);
+	}
+	//스텝 업데이트
+		private int updateStep(int bgroup, int bstep) {
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("bgroup", bgroup);
+			map.put("bstep", bstep);
+			return sqlSession.update("mappers.BoardDAO-mapper.updateStep",map);
+		}
 
 
 }

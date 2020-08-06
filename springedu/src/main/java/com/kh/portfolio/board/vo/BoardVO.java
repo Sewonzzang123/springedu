@@ -42,7 +42,7 @@ public class BoardVO {
 	
 	private int bgroup;//	BGROUP	NUMBER	Yes		10	답글 그룹
 	private int bstep;//	BSTEP	NUMBER	Yes		11	답변글의 단계
-	private int bident;//	BINDENT	NUMBER	Yes		12	답변글의 들여쓰기
+	private int bindent;//	BINDENT	NUMBER	Yes		12	답변글의 들여쓰기
 	
 	//첨부파일
 	private List<MultipartFile> files;
