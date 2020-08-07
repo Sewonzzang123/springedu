@@ -28,6 +28,7 @@ import com.kh.portfolio.board.vo.BoardCategoryVO;
 import com.kh.portfolio.board.vo.BoardFileVO;
 import com.kh.portfolio.board.vo.BoardVO;
 
+import net.bytebuddy.implementation.bind.annotation.BindingPriority;
 import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
@@ -155,6 +156,7 @@ public class BoardController {
 		return "redirect:/board/view/"+boardVO.getBnum();
 	}
 	
+	//첨부파일 개별삭제
 	@DeleteMapping("/file/{fid}")
 	public ResponseEntity<String> fileDelete(
 			@PathVariable("fid") String fid){
@@ -168,6 +170,40 @@ public class BoardController {
 		}
 		return res;
 	}
+	
+	//게시글 답글(양식)
+	@GetMapping("/reply/{bnum}")
+	public String replyForm(@PathVariable("bnum") String bnum, 
+			Model model) {
+		
+		//부모글 가져오기
+		Map<String, Object> map = boardSVC.view(bnum);
+		BoardVO boardVO = (BoardVO)map.get("board");
+	
+	
+		boardVO.setBid("");
+		boardVO.setBnickname("");
+		//답글은 기존타이틀에서 [답글]이 추가가됨
+		boardVO.setBtitle("[답글] "+boardVO.getBtitle());
+		boardVO.setBcontent("[원글] "+boardVO.getBcontent());
 
+		model.addAttribute("boardVO", boardVO);
+		
+		return "/board/replyForm";
+	}
+	//게시글 답글
+	@PostMapping("/reply")
+	public String reply(
+			@Valid @ModelAttribute("boardVO") BoardVO boardVO,
+			BindingResult result) {
+		
+		if(result.hasErrors()) {
+			return "/board/replyForm";
+		}
+		boardSVC.reply(boardVO);
+
+		
+		return "redirect:/board/list";
+	}
 	
 }

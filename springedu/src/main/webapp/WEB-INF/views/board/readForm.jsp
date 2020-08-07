@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="${contextPath }/css/main.css?ver=2">
 <link rel="stylesheet"
 	href="${contextPath }/css/board/readForm.css?ver=123">
-<script defer src="${contextPath }/js/board/readForm.js?ver=1"></script>
+<script defer src="${contextPath }/js/board/readForm.js?ver=2"></script>
 
 </head>
 <body>
@@ -72,7 +72,7 @@
 						</li>
 						<!-- 읽기모드 버튼 -->
 						<li class="btnGrp">
-							<form:button type="button" id="replyBtn" class="btn rmode btn-outline-success">답글</form:button>
+							<form:button type="button" id="replyBtn" class="btn rmode btn-outline-success" data-bnum="${requestScope.boardVO.bnum }">답글</form:button>
 							<form:button	type="button" id="modifyBtn" class="btn rmode btn-outline-danger">수정</form:button> 
 							<form:button type="button" id="deleteBtn" class="btn rmode btn-outline-warning" data-bnum="${requestScope.boardVO.bnum }">삭제</form:button> 	
 

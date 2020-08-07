@@ -50,6 +50,10 @@ function listBtn_f(e) {
 function replyBtn_f(e){
 console.log("replyBtn_f");
 
+	const bnum= e.target.getAttribute("data-bnum");
+	let url = `/portfolio/board/reply/${bnum}`;
+ 	window.location.href=url;
+
 }
 //수정
 function modifyBtn_f(e){
