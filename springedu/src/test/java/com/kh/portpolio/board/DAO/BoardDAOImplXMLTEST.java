@@ -18,6 +18,7 @@ import com.kh.portfolio.board.dao.BoardDAO;
 import com.kh.portfolio.board.vo.BoardCategoryVO;
 import com.kh.portfolio.board.vo.BoardFileVO;
 import com.kh.portfolio.board.vo.BoardVO;
+import com.kh.portfolio.common.page.RecordCriteria;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/*.xml"})
@@ -28,6 +29,9 @@ public class BoardDAOImplXMLTEST {
 
 	@Inject
 	BoardDAO boardDAO;
+	
+	@Inject
+	RecordCriteria recordCriteria;
 	
 	@Test
 	@DisplayName("게시판 카테고리 불러오기")
@@ -73,10 +77,35 @@ public class BoardDAOImplXMLTEST {
 	}
 	
 	@Test
-	@DisplayName("게시글 보기")
+	@DisplayName("샘플 게시글 작성")
 	@Disabled
+	void writeSampleData() {
+//    #{cid},
+//    #{btitle},
+//    #{bid},
+//    #{nickname},
+//    #{bcontent},	
+		for(int i=1; i<325; i++) {
+		BoardVO boardVO = new BoardVO();
+		BoardCategoryVO boardCategoryVO = new BoardCategoryVO();
+		
+		boardVO.setBoardCategoryVO(boardCategoryVO);
+		boardVO.getBoardCategoryVO().setCid(1001);
+		boardVO.setBtitle("테스트 제목");
+		boardVO.setBid("sewon0618@naver.com");
+		boardVO.setBnickname("별칭"+i);
+		boardVO.setBcontent("본문"+i);
+		
+		int result = boardDAO.write(boardVO);
+		}
+		//Assertions.assertEquals(1, result);
+	}
+	
+	@Test
+	@DisplayName("게시글 보기")
+//	@Disabled
 	void view() {
-		String bnum="68";
+		String bnum="84";
 		
 		BoardVO boardVO = boardDAO.view(bnum);
 		logger.info("boardVO:"+ boardVO.toString());
@@ -86,7 +115,7 @@ public class BoardDAOImplXMLTEST {
 	@DisplayName("첨부파일조회")
 	@Disabled
 	void getFiles() {
-		String bnum="2";
+		String bnum="84";
 		List<BoardFileVO> list = boardDAO.getFiles(bnum);
 		
 		list.stream().forEach(System.out::println);
@@ -153,7 +182,7 @@ public class BoardDAOImplXMLTEST {
 	
 	@Test
 	@DisplayName("답글 작성")
-//	@Disabled
+	@Disabled
 	void reply() {
 //		#{boardCategoryVO.cid},
 //		#{btitle},
@@ -178,5 +207,28 @@ public class BoardDAOImplXMLTEST {
 	int result = boardDAO.reply(boardVO);
 	
 	Assertions.assertEquals(1, result);
+	}
+	
+	@Test
+	@DisplayName("통합 레코드 수")
+	@Disabled
+	void totalRecordCount() {
+		//logger.info(":"+boardDAO.totalRecordCount());
+	}
+	
+	@Test
+	@DisplayName("게시글 목록+페이징")
+	@Disabled
+	void list() {
+		String searchType="A";
+		String keyword = "답글 제목3";
+		recordCriteria.setReqPage(1);
+		recordCriteria.setRecNumPerPage(10);
+		List<BoardVO> list = boardDAO.list(recordCriteria.getStartRec(), 
+				recordCriteria.getEndRec(), searchType, keyword);
+		
+		logger.info("레코드 갯수="+list.size());
+		
+		list.stream().forEach(System.out::println);
 	}
 }

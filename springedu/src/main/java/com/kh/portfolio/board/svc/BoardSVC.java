@@ -6,10 +6,12 @@ import java.util.Map;
 import com.kh.portfolio.board.vo.BoardCategoryVO;
 import com.kh.portfolio.board.vo.BoardFileVO;
 import com.kh.portfolio.board.vo.BoardVO;
+import com.kh.portfolio.common.page.FindCriteria;
+import com.kh.portfolio.common.page.PageCriteria;
 
 public interface BoardSVC {
 	//게시판 분류코드 읽어오기
-	List<BoardCategoryVO> getCategory();
+	List<BoardCategoryVO> getCategory(); 
 	//게시글 작성
 	int write(BoardVO boardVO);
 	//게시글 수정
@@ -21,12 +23,21 @@ public interface BoardSVC {
 	//게시글 보기
 	Map<String, Object> view(String bnum); 
 	//게시글 목록
+	List<BoardVO> list(int reqPage);
 	List<BoardVO> list();
+	List<BoardVO> list(int reqPage, String searchType, String keyword);
 	
 	//첨부파일 다운로드
 	BoardFileVO viewFile(String fid);
 	//답글 작성
 	int reply(BoardVO boardVO);
+	//페이징제어 반환
+	PageCriteria getPageCriteria(int reqPage);
+	
+	//페이징제어 + 검색포함
+	FindCriteria getFindCriteria(int reqPage,String searchType, String keyword);
+	
+
 
 	
 }

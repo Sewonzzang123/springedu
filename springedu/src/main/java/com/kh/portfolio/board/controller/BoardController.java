@@ -3,6 +3,7 @@ package com.kh.portfolio.board.controller;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -73,11 +74,27 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 
-	// 게시글 리스트
-	@GetMapping("/list")
-	public String list(Model model) {
-		model.addAttribute("list", boardSVC.list());
+//게시글 목록
+	@GetMapping({"/list",
+							 "/list/{reqPage}",
+							 "/list/{reqPage}/{searchType}/{keyword}"})
+	public String list(
+			@PathVariable(value="reqPage",required = false) Optional<Integer> reqPage,
+			@PathVariable(value="searchType",required = false) String searchType,
+			@PathVariable(value="keyword",required = false) String keyword,
+			Model model
+			) {
+		//url경로상에 reqPage값이 존재하지않으면 1로 설정함.
+//		int page = 1;
+//		if(reqPage.isPresent()) {
+//			page = reqPage.get();
+//		}
+//		int page = (reqPage.isPresent()) ? reqPage.get() : 1;
+//		
+//		logger.info("reqPage:"+reqPage.orElse(1));
 		
+		model.addAttribute("list", boardSVC.list(reqPage.orElse(1),searchType,keyword));
+		model.addAttribute("findCriteria", boardSVC.getFindCriteria(reqPage.orElse(1),searchType,keyword));
 		return "/board/list";
 	}
 	
@@ -87,7 +104,7 @@ public class BoardController {
 			@PathVariable("bnum") String bnum,
 			Model model) {
 		Map<String, Object> map = boardSVC.view(bnum);
-		BoardVO boardVO = (BoardVO)map.get("board");
+		BoardVO boardVO = (BoardVO)map.get("boardVO");
 
 		List<BoardFileVO> files = null;
 		if(map.get("files")!=null) {
@@ -150,9 +167,7 @@ public class BoardController {
 		}
 		//수정
 		boardSVC.modify(boardVO);
-			
-
-		
+				
 		return "redirect:/board/view/"+boardVO.getBnum();
 	}
 	
@@ -178,7 +193,7 @@ public class BoardController {
 		
 		//부모글 가져오기
 		Map<String, Object> map = boardSVC.view(bnum);
-		BoardVO boardVO = (BoardVO)map.get("board");
+		BoardVO boardVO = (BoardVO)map.get("boardVO");
 	
 	
 		boardVO.setBid("");

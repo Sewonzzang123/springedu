@@ -16,109 +16,189 @@ import com.kh.portfolio.board.vo.BoardFileVO;
 import com.kh.portfolio.board.vo.BoardVO;
 
 @Repository
-public class BoardDAOImplXML implements BoardDAO{
-	private static final Logger logger=
-			LoggerFactory.getLogger(BoardDAOImplXML.class);
-	
+public class BoardDAOImplXML implements BoardDAO {
+//서비스 이름(메소드) 및 인아웃 정의:기능 
+	// CRUD
+
+	private static final Logger Logger = LoggerFactory.getLogger(BoardDAOImplXML.class);
+
 	@Inject
 	SqlSession sqlSession;
+
 	
-	//게시판 카테고리 읽어오기
+//게시판 카테고리 읽어오기
 	@Override
 	public List<BoardCategoryVO> getCategory() {
-		List<BoardCategoryVO> list = null;
-		list = sqlSession.selectList("mappers.BoardDAO-mapper.getCategory");
+		 List<BoardCategoryVO> list = null;	 
+		 list = sqlSession.selectList("mappers.BoardDAO-mapper.getCategory");		
 		return list;
 	}
-	//게시글 작성
+	
+	
+	
+	// 게시글 작성
 	@Override
 	public int write(BoardVO boardVO) {
 		int result = 0;
-		//namespace.id
 		result = sqlSession.insert("mappers.BoardDAO-mapper.write", boardVO);
+		return result;}
+	
+	//게시글 첨부파일 저장
+	@Override
+	public int addFile(BoardFileVO boardFileVO) {
+		
+		int result = 0;
+		result = sqlSession.insert("mappers.BoardDAO-mapper.addFile", boardFileVO);
 		
 		return result;
 	}
-	//게시글 수정
+	
+	// 게시글 수정
 	@Override
-	public int modify(BoardVO boardVO) {
-		
-		return sqlSession.update("mappers.BoardDAO-mapper.modify",boardVO);
-	}
-	//게시글 삭제
-	@Override
-	public int delete(String bnum) {
+	public int modify(BoardVO boardVO) {		
 		int result = 0;
-		result = sqlSession.delete("mappers.BoardDAO-mapper.delete", Long.valueOf(bnum));
+		result = sqlSession.update("mappers.BoardDAO-mapper.modify", boardVO);
 		return result;
+		
 	}
-	//게시글 첨부파일 개별 삭제
+	// 게시글 삭제
 	@Override
-	public int deleteFile(String fid) {
-		int result = 0;
+	public int delete(String bNum) {
+		int result = 0; 
+		result = sqlSession.delete("mappers.BoardDAO-mapper.delete", Long.valueOf(bNum));
+		return result;
+	
+	}
+
+
+//첨부파일 삭제 (개별)
+	@Override
+	public int deleteFile( String fid) {
+		int result = 0; 
 		result = sqlSession.delete("mappers.BoardDAO-mapper.deleteFile", Long.valueOf(fid));
 		return result;
 	}
 
-	//게시글 보기
+	
+
+	// 1게시글 보기
 	@Override
-	public BoardVO view(String bnum) {
+	public BoardVO view(String bNum) {
 		BoardVO boardVO = null;
-		boardVO = sqlSession.selectOne("mappers.BoardDAO-mapper.view", Long.valueOf(bnum));
+		boardVO = sqlSession.selectOne("mappers.BoardDAO-mapper.view",Long.valueOf(bNum));
+
 		return boardVO;
 	}
-	//게시글 보기 전체
+	
+	
+	//2첨부파일 조회
+	@Override
+	public List<BoardFileVO> getFiles(String bNum) {
+		 List<BoardFileVO> list = null;
+		 list = sqlSession.selectList("mappers.BoardDAO-mapper.getFiles", Long.valueOf(bNum));		
+		return list;
+	}
+
+	//3조회수 업데이트
+	@Override
+	public void updateBhit(String bNum) {
+		
+		sqlSession.update("mappers.BoardDAO-mapper.updateBhit",Long.valueOf(bNum));		
+	}
+	
+	
+	// 게시글 목록
 	@Override
 	public List<BoardVO> list() {
+		List<BoardVO> list = null;		
+		list = sqlSession.selectList("mappers.BoardDAO-mapper.list1");
+		return list;
+	}
+
+	//게시글 목록 + 페이징
+	@Override
+	public List<BoardVO> list(int startRec, int endRec) {
 		List<BoardVO> list = null;
 		
-		list = sqlSession.selectList("mappers.BoardDAO-mapper.list");
-		return list;
-	}
-	//파일 첨부
-	@Override
-	public int addFile(BoardFileVO boardFileVO) {
-		int result = 0;
-		result = sqlSession.insert("mappers.BoardDAO-mapper.addFile",boardFileVO);
-		return 0;
-	}
-	@Override
-	public List<BoardFileVO> getFiles(String bnum) {
-		List<BoardFileVO> list = null;
-		list = sqlSession.selectList("mappers.BoardDAO-mapper.getFiles",Long.valueOf(bnum));
-		return list;
-	}
-	@Override
-	public void updateBhit(String bnum) {
-		sqlSession.update("mappers.BoardDAO-mapper.updateBhit", Long.valueOf(bnum));
+		Map<String, Object> map = new HashMap<>();
 		
+		map.put("startRec", startRec);
+		map.put("endRec", endRec);
+		list = sqlSession.selectList("mappers.BoardDAO-mapper.list3",map);
+		return list;
 	}
-	//첨부파일 다운로드
+	
+
+
+	@Override
+	public List<BoardVO> list(int startRec, int endRec, String searchType, String keyword) {
+		List<BoardVO> list = null;
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("startRec", startRec);
+		map.put("endRec", endRec);
+		map.put("searchType", searchType);
+		map.put("keyword", keyword);
+		list = sqlSession.selectList("mappers.BoardDAO-mapper.list",map);
+		return list;
+	}
+
+	
+	
+//첨부파일 다운로드
 	@Override
 	public BoardFileVO viewFile(String fid) {
 		BoardFileVO boardFileVO = null;
-		boardFileVO = sqlSession.selectOne("mappers.BoardDAO-mapper.viewFile", Long.valueOf(fid));
+		boardFileVO = sqlSession.selectOne("mappers.BoardDAO-mapper.viewFile", Long.valueOf(fid));		
 		return boardFileVO;
 	}
-	//답글 작성
+	
+	
+	
+	// 답글 _ 게시글
 	@Override
 	public int reply(BoardVO boardVO) {
-		//이전 답글 step update
-		//최초원글 답글 중 부모글보다 답글단게가 큰 경우 +1 증가
+		//이전 답글 bstep 업데이트  : 최조 원글 답글중 부모글 보다 답글 단계가 큰경우 +1 증가
 		updateStep(boardVO.getBgroup(), boardVO.getBstep());
+		//답글달기 
 		
-		
-		//답글 달기
-		return sqlSession.insert("mappers.BoardDAO-mapper.reply", boardVO);
+		return sqlSession.insert("mappers.BoardDAO-mapper.reply",boardVO);
 	}
-	//스텝 업데이트
-		private int updateStep(int bgroup, int bstep) {
-			
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("bgroup", bgroup);
-			map.put("bstep", bstep);
-			return sqlSession.update("mappers.BoardDAO-mapper.updateStep",map);
-		}
+
+
+	//이전 답글 step 업데이트 
+	private int updateStep(int bgroup, int bstep) {	
+		Map<String,Object> map = new HashMap<>();
+		map.put("bgroup", bgroup);
+		map.put("bstep",bstep);		
+		return sqlSession.update("mappers.BoardDAO-mapper.updateStep", map);
+	}
+
+	
+//게시글 총 레코드 수 
+	@Override
+	public int totalRecordCount() {
+		return sqlSession.selectOne("mappers.BoardDAO-mapper.totalRecordCount");
+	}
+	@Override
+	public int totalRecordCount(String searchType, String keyword) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("searchType", searchType);
+		map.put("keyword", keyword);
+		return sqlSession.selectOne("mappers.BoardDAO-mapper.searchedTotalRecordCount",map);
+	}
+
+
+
+
+
+
+
+
+	
+
+
 
 
 }

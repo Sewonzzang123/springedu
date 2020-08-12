@@ -54,7 +54,6 @@
 					<div class="btnGrp">
 						<button id="writeBtn">글쓰기</button>
 					</div>
-					
 					<div class="paging">
 						<c:if test="${findCriteria.pageCriteria.prev}">
 							<div>

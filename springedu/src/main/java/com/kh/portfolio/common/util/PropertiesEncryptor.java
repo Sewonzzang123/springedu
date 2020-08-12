@@ -12,8 +12,10 @@ public class PropertiesEncryptor {
 		enc.setPassword("gkrToaWkd");
 		
 		//db암호화
-		System.out.println(enc.encrypt("oracle.jdbc.driver.OracleDriver"));
-		System.out.println(enc.encrypt("jdbc:oracle:thin:@127.0.0.1:1521:xe"));
+		//System.out.println(enc.encrypt("oracle.jdbc.driver.OracleDriver"));
+		System.out.println(enc.encrypt("net.sf.log4jdbc.sql.jdbcapi.DriverSpy"));
+		//System.out.println(enc.encrypt("jdbc:oracle:thin:@127.0.0.1:1521:xe"));
+		System.out.println(enc.encrypt("jdbc:log4jdbc:oracle:thin:@127.0.0.1:1521:xe"));
 		System.out.println(enc.encrypt("portfolio"));
 		System.out.println(enc.encrypt(""));
 		
@@ -22,7 +24,8 @@ public class PropertiesEncryptor {
 		System.out.println(enc.encrypt("spring1234"));
 		
 		//복호화
-		System.out.println(enc.decrypt("+4J2oANlBNioZ683EmH10yBIoywZn/cPksqISgFBLTI="));
+		System.out.println(enc.decrypt("X9aZ5or9PhTYrJZXnu3AOg=="));
+		System.out.println(enc.decrypt("NPVERqVSkhtbvNBCvd+TVQi1oPCOs23T"));
 	}
 
 }

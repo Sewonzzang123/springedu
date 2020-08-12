@@ -21,16 +21,23 @@ public interface BoardDAO {
 	BoardVO view(String bnum); 
 	//게시글 목록
 	List<BoardVO> list();
+	List<BoardVO> list(int startRec, int endRec);
+	List<BoardVO> list(int startRec, int endRec, String searchType, String keyword);
 	//파일첨부
 	int addFile(BoardFileVO boardFileVO);
 	//첨부파일 가져오기
 	List<BoardFileVO> getFiles(String bnum);
+
 	//조회수 +1 증가하기
 	void updateBhit(String bnum);
 	//첨부파일 다운로드
 	BoardFileVO viewFile(String fid);
 	//답글 작성
 	int reply(BoardVO boardVO);
+
+	//게시글 총 레코드 수 
+	int totalRecordCount();	
+	int totalRecordCount(String searchType, String keyword);
 
 	
 }

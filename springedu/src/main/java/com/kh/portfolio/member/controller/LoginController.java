@@ -23,12 +23,17 @@ public class LoginController {
 	MemberSVC memberSVC;
 
 	@GetMapping("/loginForm")
-	public String loginForm() {
+	public String loginForm(
+	@RequestParam(value="reqURI",required=false) String reqURI, Model model) {
+		model.addAttribute("reqURI", reqURI);
 		return "/member/loginForm";
 	}
 
 	@PostMapping("/login")
-	public String login(@RequestParam("id") String id, @RequestParam("pw") String pw, HttpSession session, Model model) {
+	public String login(@RequestParam("id") String id,
+			@RequestParam("pw") String pw,
+			@RequestParam("reqURI") String reqURI,
+			HttpSession session, Model model) {
 
 //		logger.info("String login() 호출");
 //		logger.info("id:" + id);
@@ -52,7 +57,7 @@ public class LoginController {
 				return"/member/loginForm";
 			}
 		}
-		return "redirect:/";
+		return "redirect:/"+reqURI;
 	}
 	
 	@GetMapping("/logout")

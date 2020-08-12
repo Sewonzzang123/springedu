@@ -62,3 +62,15 @@
 	display: flex;
 	justify-content: center;
 }
+
+#boardList .paging div{
+	border:1px solid blue;
+	padding:2px;
+
+}
+
+#boardList .paging div.active{
+	background-color:blue3;
+	color:white;
+}
+
