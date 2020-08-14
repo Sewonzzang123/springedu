@@ -6,7 +6,7 @@
 <title>게시글 보기</title>
 <link rel="stylesheet" href="${contextPath }/css/board/board.css">
 <link rel="stylesheet" href="${contextPath }/css/board/readForm.css">
-<script defer src="${contextPath }/js/board/readForm.js"></script>
+<script defer src="${contextPath }/js/board/readForm.js?ver=34"></script>
 </head>
 <body>
 	<!-- 최상위메뉴 -->
@@ -23,7 +23,7 @@
 		<div class="container">
 			<div class="content">
 				<form:form id="writeFrm" method="post"
-					action="${contextPath }/board/modify" enctype="multipart/form-data"
+					action="${contextPath }/board/modify/${requestScope.returnPage }" enctype="multipart/form-data"
 					modelAttribute="boardVO">
 					<form:hidden path="bnum" />
 					<legend id="title">게시글 보기</legend>
@@ -39,10 +39,12 @@
 								type="text" path="btitle" readonly="true" /> <span
 							class="client_msg" id="btitle.error"></sapn> <form:errors
 									cssClass="svr_msg" path="btitle" /></li>
-						<li><form:label path="bid">작성자</form:label> <form:input
-								type="text" path="bid" readonly="true" /> <span
-							class="client_msg" id="bid.error"></sapn> <form:errors
-									cssClass="svr_msg" path="bid" /></li>
+						<li>
+							<label for="bid">작성자</label>
+							<input type="text" id="bid" value="${sessionScope.member.nickname }(${sessionScope.member.id })" readonly="true"/>
+							<span class="client_msg" id="bid.error"></sapn>								
+							<form:errors cssClass="svr_msg" path="bid"/>
+						</li>
 						<li><form:label path="bcontent">내용</form:label> <form:textarea
 								path="bcontent" rows="10" readonly="true"></form:textarea> <span
 							class="client_msg" id="bcontent.error"></sapn> <form:errors
@@ -54,16 +56,21 @@
 						<li class="btnGrp">
 							<!-- 읽기모드 버튼 --> <form:button id="replyBtn" type="button"
 								class="btn rmode btn-outline-success"
-								data-bnum="${requestScope.boardVO.bnum }">답글</form:button> <form:button
-								id="modifyBtn" type="button"
-								class="btn rmode btn-outline-danger">수정</form:button> <form:button
-								id="deleteBtn" type="button" class="btn rmode btn-outline-info"
-								data-bnum="${requestScope.boardVO.bnum }"> 삭제</form:button> <!-- 수정모드 버튼 -->
-							<form:button id="cancelBtn" type="button"
+								data-bnum="${requestScope.boardVO.bnum }" data-returnPage="${requestScope.returnPage }">답글</form:button> 
+								<!--작성자만 수정, 삭제 가능 시작-->				
+								<c:if test="${requestScope.boardVO.bid }.equals(${sessionScope.member.id })">
+								<form:button id="modifyBtn" type="button" class="btn rmode btn-outline-danger">수정</form:button> 
+								<form:button id="deleteBtn" type="button" class="btn rmode btn-outline-info"
+								data-bnum="${requestScope.boardVO.bnum }" data-returnPage="${requestScope.returnPage }"> 삭제</form:button>
+								</c:if>
+								<!-- 작성자만 수정, 삭제 가능 끝--> 
+								<!-- 수정모드 버튼 -->
+								
+							<form:button id="cancelBtn"
 								class="btn umode btn-outline-danger">취소</form:button> <form:button
-								id="saveBtn" type="button" class="btn umode btn-outline-success">저장</form:button>
-							<!-- 공통버튼 --> <form:button id="listBtn" type="button"
-								class="btn btn-outline-info"> 목록</form:button>
+								id="saveBtn" class="btn umode btn-outline-success" data-returnPage="${requestScope.returnPage }">저장</form:button>
+							<!-- 공통버튼 --> 
+							<form:button id="listBtn" class="btn btn-outline-info" data-returnPage="${requestScope.returnPage }"> 목록</form:button>
 						</li>
 						<!-- 첨부목록 -->
 						<li><form:label path="">첨부목록</form:label> <c:if

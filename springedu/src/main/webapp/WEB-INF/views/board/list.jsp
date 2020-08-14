@@ -2,10 +2,12 @@
 	pageEncoding="UTF-8"%>
 <!-- 공통 모듈 -->
 <%@ include file="/WEB-INF/views/include/common.jsp"%>
+<!-- 장점 : 양식(form태그)의 코딩량을 줄일 수 있다. -->
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <title>게시글 작성</title>
-<link rel="stylesheet" href="${contextPath }/css/board/board.css?ver=1">
-<link rel="stylesheet" href="${contextPath }/css/board/list.css?ver=2">
+<link rel="stylesheet" href="${contextPath }/css/board/board.css?ver=2">
+<link rel="stylesheet" href="${contextPath }/css/board/list.css?ver=22">
 <script defer src="${contextPath }/js/board/list.js?ver=1"></script>
 </head>
 <body>
@@ -27,6 +29,11 @@
 					<div>
 						<h2>게시글 목록</h2>
 					</div>
+					<div class="totalRec">
+						<button type="button" class="btn btn-primary">
+  						총 <span class="badge badge-light">${findCriteria.pageCriteria.totalRec }</span>건
+						</button>
+					</div>
 					<div class="wrapper">
 						<div class="head">번호</div>
 						<div class="head">분류</div>
@@ -42,7 +49,7 @@
 								<c:if test="${rec.bindent>0 }">
 									<i class="fas fa-reply"></i>
 								</c:if>
-								<a href="./view/${rec.bnum }">${rec.btitle }</a>
+								<a href="${contextPath }/board/view/${rec.bnum }/${findCriteria.pageCriteria.rc.reqPage}">${rec.btitle }</a>
 							</div>
 							<div class="rec">${rec.bnickname }</div>
 							<div class="rec">
@@ -52,9 +59,9 @@
 						</c:forEach>
 					</div>
 					<div class="btnGrp">
-						<button id="writeBtn">글쓰기</button>
+						<button id="writeBtn"class="btn btn-outline-dark">글쓰기</button>
 					</div>
-					
+
 					<div class="paging">
 						<c:if test="${findCriteria.pageCriteria.prev}">
 							<div>
@@ -71,36 +78,34 @@
 						<c:forEach var="pageNum"
 							begin="${findCriteria.pageCriteria.startPage }"
 							end="${findCriteria.pageCriteria.endPage }">
+							<div class="active">
+								<!-- 현재페이지와 요청페이지가 같으면 -->
+								<c:if test="${pageNum == findCriteria.pageCriteria.rc.reqPage}">
+								</c:if>
+								<!-- 현재페이지와 요청페이지가 다르면 -->
+								<c:if test="${pageNum != findCriteria.pageCriteria.rc.reqPage}">
+								</c:if>
+								<a
+									href="${contextPath }/board/list/${pageNum }/${findCriteria.searchType}/${findCriteria.keyword}">${pageNum }</a>
+							</div>
 
-							<!-- 현재페이지와 요청페이지가 같으면 -->
-							<c:if test="${pageNum == findCriteria.pageCriteria.rc.reqPage}">
-								<div class="active">
-							</c:if>
-							<!-- 현재페이지와 요청페이지가 다르면 -->
-							<c:if test="${pageNum != findCriteria.pageCriteria.rc.reqPage}">
-								<div>
-							</c:if>
-							<a
-								href="${contextPath }/board/list/${pageNum }/${findCriteria.searchType}/${findCriteria.keyword}">${pageNum }</a>
+						</c:forEach>
+						<c:if test="${findCriteria.pageCriteria.next}">
+							<div>
+								<a
+									href="${contextPath }/board/list/${findCriteria.pageCriteria.endPage+1}/${findCriteria.searchType}/${findCriteria.keyword}"><i
+									class="fas fa-angle-right"></i></a>
+							</div>
+							<div>
+								<a
+									href="${contextPath }/board/list/${findCriteria.pageCriteria.finalEndPage}/${findCriteria.searchType}/${findCriteria.keyword}"><i
+									class="fas fa-angle-double-right"></i></a>
+							</div>
+						</c:if>
 					</div>
-
-					</c:forEach>
-					<c:if test="${findCriteria.pageCriteria.next}">
-						<div>
-							<a
-								href="${contextPath }/board/list/${findCriteria.pageCriteria.endPage+1}/${findCriteria.searchType}/${findCriteria.keyword}"><i
-								class="fas fa-angle-right"></i></a>
-						</div>
-						<div>
-							<a
-								href="${contextPath }/board/list/${findCriteria.pageCriteria.finalEndPage}/${findCriteria.searchType}/${findCriteria.keyword}"><i
-								class="fas fa-angle-double-right"></i></a>
-						</div>
-					</c:if>
 				</div>
-			</div>
-			<div class="find">
-				<form>
+				<div class="find">
+					<!-- <form>
 					<select name="searchType" id="searchType">
 						<option value="TC"
 							<c:out value="${findCriteria.searchType == 'TC' ? 'selected':'' }"/>>제목+내용</option>
@@ -117,13 +122,17 @@
 					</select> <input type="text" name="keyword" id="keyword"
 						value="${findCriteria.keyword }" />
 					<button id="findBtn" type="button">검색</button>
-				</form>
+				</form> -->
+					<form:form modelAttribute="findCriteria">
+						<form:select path="searchType">
+							<form:options items="${codeDecodeList }" itemLabel="decode"
+								itemValue="code" />
+						</form:select>
+						<form:input type="text" path="keyword" />
+						<button id="findBtn" type="button" class="btn btn-outline-secondary">검색</button>
+					</form:form>
+				</div>
 			</div>
-		</div>
-
-		</form>
-		</div>
-		</div>
 	</main>
 
 

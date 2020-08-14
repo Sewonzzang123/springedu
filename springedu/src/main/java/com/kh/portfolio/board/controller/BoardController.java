@@ -1,11 +1,13 @@
 package com.kh.portfolio.board.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -28,9 +30,8 @@ import com.kh.portfolio.board.svc.BoardSVC;
 import com.kh.portfolio.board.vo.BoardCategoryVO;
 import com.kh.portfolio.board.vo.BoardFileVO;
 import com.kh.portfolio.board.vo.BoardVO;
-
-import net.bytebuddy.implementation.bind.annotation.BindingPriority;
-import oracle.jdbc.proxy.annotation.Post;
+import com.kh.portfolio.board.vo.CodeDecodeVO;
+import com.kh.portfolio.member.vo.MemberVO;
 
 @Controller
 @RequestMapping("/board")
@@ -46,7 +47,21 @@ public class BoardController {
 	public List<BoardCategoryVO> getCategory() {
 		return  boardSVC.getCategory();
 	}
-
+	
+	//검색
+	@ModelAttribute("codeDecodeList")
+	public List<CodeDecodeVO> getCode(){
+		List<CodeDecodeVO> codeDecodeList = new ArrayList<>();
+		codeDecodeList.add(new CodeDecodeVO("TC", "제목+내용"));
+		codeDecodeList.add(new CodeDecodeVO("T", "제목"));
+		codeDecodeList.add(new CodeDecodeVO("C", "내용"));
+		codeDecodeList.add(new CodeDecodeVO("I", "아이디"));
+		codeDecodeList.add(new CodeDecodeVO("N", "별칭"));
+		codeDecodeList.add(new CodeDecodeVO("A", "전체"));
+		
+		return codeDecodeList;
+	}
+	
 	// 게시글 작성
 	@GetMapping("/writeForm")//case1) jsp에 form태그에서 ModelAttribute가없으면 안돼
 	public String writeForm(@ModelAttribute("boardVO") BoardVO boardVO,
@@ -61,13 +76,17 @@ public class BoardController {
 	// 게시글 작성 처리
 	@PostMapping("/write")//vaild 유효성체크
 	public String write(@Valid @ModelAttribute("boardVO") BoardVO boardVO, 
-			BindingResult result
+			BindingResult result,
+			HttpServletRequest request
 			//Model model 
 			) {
 
 		if (result.hasErrors()) {
 			return "/board/writeForm";
 		}
+		MemberVO memberVO = (MemberVO)request.getSession().getAttribute("member");
+		boardVO.setBid(memberVO.getId());
+		boardVO.setBnickname(memberVO.getNickname());
 		
 		 boardSVC.write(boardVO);
 		 
@@ -99,9 +118,10 @@ public class BoardController {
 	}
 	
 	//게시글 보기
-	@GetMapping("/view/{bnum}")
+	@GetMapping("/view/{bnum}/{returnPage}")
 	public String view(
-			@PathVariable("bnum") String bnum,
+			@PathVariable("bnum") String bnum,//("bnum")생략가능
+			@PathVariable("returnPage") String returnPage,
 			Model model) {
 		Map<String, Object> map = boardSVC.view(bnum);
 		BoardVO boardVO = (BoardVO)map.get("boardVO");
@@ -113,15 +133,19 @@ public class BoardController {
 		
 		model.addAttribute("files", files);
 		model.addAttribute("boardVO", boardVO);
+		model.addAttribute("returnPage", returnPage);
+		
 		return "/board/readForm";
 	}
 
 	//게시글 삭제
-	@GetMapping("/delete/{bnum}")
-	public String delete(@PathVariable("bnum") String bnum) {
+	@GetMapping("/delete/{bnum}/{returnPage}")
+	public String delete(
+			@PathVariable("bnum") String bnum,
+			@PathVariable String returnPage) {
 		boardSVC.delete(bnum);
 		
-		return "redirect:/board/list";
+		return "redirect:/board/list/"+returnPage;
 		}
 	
 	//첨부파일 다운로드
@@ -158,8 +182,9 @@ public class BoardController {
 	}
 	
 	//게시글 수정
-	@PostMapping("/modify")
+	@PostMapping("/modify/{returnPage}")
 	public String modify(@Valid @ModelAttribute("boardVO") BoardVO boardVO,
+			@PathVariable String returnPage,
 			BindingResult result) {
 		//바인딩시 오류가 발생할 경우
 		if(result.hasErrors()) {
@@ -168,7 +193,7 @@ public class BoardController {
 		//수정
 		boardSVC.modify(boardVO);
 				
-		return "redirect:/board/view/"+boardVO.getBnum();
+		return "redirect:/board/view/"+boardVO.getBnum()+"/"+returnPage;
 	}
 	
 	//첨부파일 개별삭제
@@ -187,8 +212,9 @@ public class BoardController {
 	}
 	
 	//게시글 답글(양식)
-	@GetMapping("/reply/{bnum}")
-	public String replyForm(@PathVariable("bnum") String bnum, 
+	@GetMapping("/reply/{bnum}/{returnPage}")
+	public String replyForm(@PathVariable("bnum") String bnum,
+			@PathVariable String returnPage,
 			Model model) {
 		
 		//부모글 가져오기
@@ -203,22 +229,28 @@ public class BoardController {
 		boardVO.setBcontent("[원글] "+boardVO.getBcontent());
 
 		model.addAttribute("boardVO", boardVO);
+		model.addAttribute("returnPage",returnPage);
 		
 		return "/board/replyForm";
 	}
 	//게시글 답글
-	@PostMapping("/reply")
+	@PostMapping("/reply/{returnPage}")
 	public String reply(
 			@Valid @ModelAttribute("boardVO") BoardVO boardVO,
-			BindingResult result) {
+			@PathVariable String returnPage,
+			BindingResult result,
+			HttpServletRequest request) {
 		
 		if(result.hasErrors()) {
 			return "/board/replyForm";
 		}
+		MemberVO memberVO = (MemberVO)request.getSession().getAttribute("member");
+		boardVO.setBid(memberVO.getId());
+		boardVO.setBnickname(memberVO.getNickname());
+		
 		boardSVC.reply(boardVO);
 
-		
-		return "redirect:/board/list";
+		return "redirect:/board/list/"+returnPage;
 	}
 	
 }

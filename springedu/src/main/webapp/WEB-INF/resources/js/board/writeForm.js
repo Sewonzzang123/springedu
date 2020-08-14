@@ -52,12 +52,12 @@ function checkValidation() {
     return false;
   }
   //정규표현식 
-	let idExpReg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-A]{2,3}$/i;
-	if(!idExpReg.test(bidTag.value)){
-	bidTag.select();
-	  document.getElementById('bid.error').textContent="이메일 형식에 맞지 않습니다 ex)test@test.com";
-	return false;
-	}
+	//let idExpReg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-A]{2,3}$/i;
+	//if(!idExpReg.test(bidTag.value)){
+	//bidTag.select();
+	//  document.getElementById('bid.error').textContent="이메일 형식에 맞지 않습니다 ex)test@test.com";
+	//return false;
+	//}
 
   //내용
   const bcontentTag = document.getElementById("bcontent");

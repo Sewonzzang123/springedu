@@ -11,7 +11,7 @@
 	crossorigin="anonymous">
 <link rel="stylesheet" href="${contextPath }/css/board/board.css">
 <link rel="stylesheet" href="${contextPath }/css/board/writeForm.css">
-<script defer src="${contextPath }/js/board/writeForm.js?ver=22"></script>
+<script defer src="${contextPath }/js/board/writeForm.js?ver=32"></script>
 
 </head>
 <body>
@@ -40,7 +40,7 @@
 					<ul>
 						<li><form:label path="boardCategoryVO.cid">분류</form:label> 
 						<form:select path="boardCategoryVO.cid">
-								<option value="0">선택<option>
+								<form:option value="0">선택</form:option>
 								<form:options path="boardCategoryVO.cid" 
 															items="${boardCategory }" 
 															itemValue="cid"
@@ -52,11 +52,12 @@
 								type="text" path="btitle" /> 
 								<span class="client_msg" id="btitle.error"></span><form:errors cssClass="svr_msg"
 								path="btitle" /></li>
-						<li><form:label path="bid">작성자</form:label> <form:input
-								type="text" path="bid" /> 
-								<span class="client_msg" id="bid.error"></span>
-									<form:errors cssClass="svr_msg"
-								path="bid" /></li>
+						<li>
+							<label for="bid">작성자</label>
+							<input type="text" id="bid" value="${sessionScope.member.nickname }(${sessionScope.member.id })" readonly="true"/>
+							<span class="client_msg" id="bid.error"></sapn>								
+							<form:errors cssClass="svr_msg" path="bid"/>
+						</li>
 						<li><form:label path="bcontent">내용</form:label> <form:textarea
 								path="bcontent" rows="10"></form:textarea> 
 									<span class="client_msg" id="bcontent.error"></span>

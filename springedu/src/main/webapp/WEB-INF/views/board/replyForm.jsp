@@ -33,7 +33,7 @@
 			<div class="content">
 				<!-- 아이디는 파일이름이랑 다르게 설정해야한다. -->
 				<form:form id="writeFrm" method="POST"
-					action="${contextPath }/board/reply" 
+					action="${contextPath }/board/reply/${requestScope.returnPage }" 
 					enctype="multipart/form-data"
 					modelAttribute="boardVO">
 					<legend>게시글 작성</legend>
@@ -48,7 +48,7 @@
 							</form:select>
 							<!-- 여기에 불러내지 않으면 controller쪽에서 읽어오지 못하기 때문에 숨겨서 보여줌 -->
 							<!-- 카테고리는 disabled처리를 했기 때문에 못읽어 -->
-							<form:hidden path="boardCategoryVO.cid" value="${boardVO.boardCategoryVO.cid }"/>
+							<form:hidden path="bid" value="${sessionScope.member.id }"/>
 							<form:hidden path="bgroup" value= "${boardVO.bgroup }"/> 
 							<form:hidden path="bstep" value= "${boardVO.bstep }"/> 
 							<form:hidden path="bindent" value= "${boardVO.bindent }"/> 
@@ -58,11 +58,12 @@
 								type="text" path="btitle" /> 
 								<span class="client_msg" id="btitle.error"></span><form:errors cssClass="svr_msg"
 								path="btitle" /></li>
-						<li><form:label path="bid">작성자</form:label> <form:input
-								type="text" path="bid" /> 
-								<span class="client_msg" id="bid.error"></span>
-									<form:errors cssClass="svr_msg"
-								path="bid" /></li>
+						<li>
+							<label for="bid">작성자</label>
+							<input type="text" id="bid" value="${sessionScope.member.nickname }(${sessionScope.member.id })" readonly="true"/>
+							<span class="client_msg" id="bid.error"></sapn>								
+							<form:errors cssClass="svr_msg" path="bid"/>
+						</li>
 						<li><form:label path="bcontent">내용</form:label> <form:textarea
 								path="bcontent" rows="10"></form:textarea> 
 									<span class="client_msg" id="bcontent.error"></span>

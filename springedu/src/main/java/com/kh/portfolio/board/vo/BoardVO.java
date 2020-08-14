@@ -27,9 +27,8 @@ public class BoardVO {
 	@Size(min=4,max=50, message="제목은 4~50자 까지 입력가능합니다!")//byte단위가아닌 글자단위
 	private String btitle;//	BTITLE	VARCHAR2(150 BYTE)	Yes		3	제목
 	
-	@NotNull
-	@Pattern(regexp="\\w+@\\w.\\w+(\\.\\w+)?", message="이메일 형식으로 입력바랍니다. ex)test@test.com")
 	private String bid;//	BID	VARCHAR2(40 BYTE)	Yes		4	작성자 ID
+	//@Pattern(regexp="\\w+@\\w.\\w+(\\.\\w+)?", message="이메일 형식으로 입력바랍니다. ex)test@test.com")
 	
 	private String bnickname;//	BNICKNAME	VARCHAR2(30 BYTE)	Yes		5	작성자 이름(별칭)
 	private Timestamp bcdate;//	BCDATE	TIMESTAMP(6)	Yes		6	작성일

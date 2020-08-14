@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/views/include/common.jsp" %>
 
 <title>초기화면</title>
-<link rel="stylesheet" href="${contextPath }/css/main.css">
+<link rel="stylesheet" href="${contextPath }/css/main.css?ver=1">
 </head>
 <body>
 	<!-- 최상위메뉴 -->

@@ -43,8 +43,10 @@
   
   /* 헤더 영역 */
   header { }
-  header > .container-h { background-image: url("https://cdn.pixabay.com/photo/2020/01/26/20/14/computer-4795762__340.jpg") ; 
-    background-size: 800px 150px; height:150px; text-align: center; background-color: gray; opacity: 0.8; }
+  header > .container-h { 
+  /*background-image: url("https://cdn.pixabay.com/photo/2020/01/26/20/14/computer-4795762__340.jpg") ; 
+    background-size: 800px 150px; height:150px; text-align: center; background-color: gray; opacity: 0.8; 
+   */ }
 
   /* 메뉴 영역 */
   nav{}

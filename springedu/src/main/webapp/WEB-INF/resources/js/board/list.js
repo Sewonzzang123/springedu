@@ -7,7 +7,7 @@
  findBtn.addEventListener("click", findBtn_f);
  
 function writeBtn_f(e) {
-   window.location.href="./writeForm";
+   window.location.href=`/portfolio/board/writeForm`;
    }
    
 function findBtn_f(e){

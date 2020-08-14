@@ -34,14 +34,14 @@
 <!-- reset.css -->
 <link rel="stylesheet" href="${contextPath }/css/reset.css"/>
 <!--jquery-->
-<script src="${contextPath }/webjars/jquery/3.5.1/jquery.js" defer></script>
+<script src="${contextPath }/webjars/jquery/3.5.1/jquery.js" ></script>
 
 <!-- bootstrap -->
-<script src="${contextPath }/webjars/bootstrap/4.5.0/js/bootstrap.js" defer></script>
+<script src="${contextPath }/webjars/bootstrap/4.5.0/js/bootstrap.js"></script>
 
 <!-- popper -->
-<script src="${contextPath }/webjars/popper.js/2.0.2/umd/popper.js" defer></script>
+<script src="${contextPath }/webjars/popper.js/2.0.2/umd/popper.js"></script>
 
 
 <!--d3-->
-<script src="${contextPath }/webjars/d3js/5.16.0/d3.js" defer></script>
+<script src="${contextPath }/webjars/d3js/5.16.0/d3.js"></script>
