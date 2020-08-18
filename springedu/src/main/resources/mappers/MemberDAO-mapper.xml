@@ -12,16 +12,19 @@
 	<!-- //회원 수정 -->
 	<update id="modifyMember"
 		parameterType="com.kh.portfolio.member.vo.MemberVO">
-		update member
-		set tel= #{tel},
-		nickname= #{nickname},
-		gender= #{gender},
-		region= #{region},
-		birth= #{birth},
-		udate=
-		systimestamp
-		where id= #{id}
-		and pw =#{pw}
+		update 	member
+		set 		tel= #{tel},
+						nickname= #{nickname},
+						gender= #{gender},
+						region= #{region},
+						birth= #{birth},
+						udate=systimestamp,
+						pic = #{pic},
+						fsize = #{fsize},
+						ftype = #{ftype},
+						fname =#{fname}
+		where 	id= #{id}
+		and 		pw =#{pw}
 	</update>
 	<!-- //회원 조회(전체) -->
 	<select id="listAllMember"
@@ -33,7 +36,8 @@
 	<!-- //회원 조회(개별) -->
 	<select id="listOneMember" parameterType="string"
 		resultType="com.kh.portfolio.member.vo.MemberVO">
-		select id,pw,nickname,tel,gender,region,birth,cdate,udate
+		select id,pw,nickname,tel,gender,region,birth,cdate,udate,
+		pic, fsize, ftype, fname
 		from member
 		where id=#{id}
 	</select>

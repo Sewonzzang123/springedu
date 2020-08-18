@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -75,14 +76,27 @@ public class MemberController {
 
 	// 회원정보수정 화면
 	@GetMapping("/modifyForm")
-	public String modifyForm() {
+	public String modifyForm(HttpSession session,
+			Model model) {
 
+		String id = ((MemberVO)session.getAttribute("member")).getId();
+		MemberVO memberVO = memberSVC.listOneMember(id);
+		
+		//이미지 base64로 변환후 img태그에 적용하기위함
+		//BASE64의 핵심은 바이너리 데이터를 ASCII코드로 변경하는 인코딩 방식
+		if(memberVO.getPic() != null) {
+			byte[] encoded = Base64.encodeBase64(memberVO.getPic());
+			model.addAttribute("pic", new String(encoded));
+			model.addAttribute("ftype",memberVO.getFtype());
+		}
 		return "/member/modifyForm";
 	}
 
 	// 회원정보수정 처리
 	@PostMapping("/modify")
-	public String modify(MemberVO memberVO, Model model, HttpSession session) {
+	public String modify(MemberVO memberVO, 
+			Model model, 
+			HttpSession session) {
 
 		int result = memberSVC.modifyMember(memberVO);
 		// 회원수정 실패
@@ -91,11 +105,13 @@ public class MemberController {
 			return "/member/modifyForm";
 		}
 
-		// 세션에서 id정보를 가져온다.
-		String id = ((MemberVO) session.getAttribute("member")).getId();
-
 		// 수정된 회원 정보를 다시 읽어온다.
-		session.setAttribute("member", memberSVC.listOneMember(id));
+		session.removeAttribute("member");
+		
+		//이미지제거 후 세션에 저장
+		memberVO.setPic(null);
+		session.setAttribute("member", memberVO);
+		
 
 		return "redirect:/member/modifyForm";
 	}
@@ -275,9 +291,9 @@ public class MemberController {
 			map.put("rtcode", "00");
 			map.put("result", "임시비밀번호가 메일로 전송되었습니다");
 			res = new ResponseEntity<Map>(map, HttpStatus.OK); // 200
-			
+
 		} else {
-			
+
 			map.put("rtcode", "01");
 			map.put("result", "비밀번호를 찾을 수  없습니다.");
 			res = new ResponseEntity<Map>(map, HttpStatus.OK); // 200
