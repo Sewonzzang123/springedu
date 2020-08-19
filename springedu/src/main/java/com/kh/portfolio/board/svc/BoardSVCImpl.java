@@ -211,7 +211,7 @@ public class BoardSVCImpl implements BoardSVC {
 		 //요청페이지
 			recordCriteria.setReqPage(reqPage ==  0? 1 : reqPage);
 		 //한페이지에 보여줄 게시글 수 
-		 recordCriteria.setRecNumPerPage(10);	 
+		 recordCriteria.setRecNumPerPage(20);	 
 		 //페이지에 보여줄 페이지 
 			pageCriteria.setPageNumPerPage(10);
 			pageCriteria.setRc(recordCriteria);							

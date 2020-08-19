@@ -117,14 +117,14 @@ public class MemberController {
 	}
 
 	// 비밀번호 변경 화면
-	@GetMapping("/chagePWForm")
+	@GetMapping("/changePWForm")
 	public String changePWForm() {
 
-		return "/member/chagePWForm";
+		return "/member/changePWForm";
 	}
 
 	// 비밀번호 변경 처리
-	@PostMapping("/chagePW")
+	@PostMapping("/changePW")
 	public String changePW(@RequestParam("id") String id, @RequestParam("prepw") String prepw,
 			@RequestParam("postpw") String postpw, Model model) {
 
@@ -133,7 +133,7 @@ public class MemberController {
 		// 비밀번호가 일치하지 않을경우
 		if (result != 1) {
 			model.addAttribute("svr_msg", "비밀번호가 일치하지 않습니다.");
-			return "/member/chagePWForm";
+			return "/member/changePWForm";
 		}
 
 		return "redirect:/member/myPage";

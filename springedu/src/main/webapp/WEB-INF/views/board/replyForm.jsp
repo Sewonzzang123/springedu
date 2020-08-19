@@ -49,6 +49,7 @@
 							<!-- 여기에 불러내지 않으면 controller쪽에서 읽어오지 못하기 때문에 숨겨서 보여줌 -->
 							<!-- 카테고리는 disabled처리를 했기 때문에 못읽어 -->
 							<form:hidden path="bid" value="${sessionScope.member.id }"/>
+							<form:hidden path="boardCategoryVO.cid" value= "${boardCategoryVO.cid }"/> 
 							<form:hidden path="bgroup" value= "${boardVO.bgroup }"/> 
 							<form:hidden path="bstep" value= "${boardVO.bstep }"/> 
 							<form:hidden path="bindent" value= "${boardVO.bindent }"/> 

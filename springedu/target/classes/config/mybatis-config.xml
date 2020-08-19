@@ -3,9 +3,21 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-<!-- mybatis에서 null값 허용 -->
+
+	<!-- mybatis에서 null값 허용 -->
 	<settings>
 		<setting name="cacheEnabled" value="flase" />
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
+
+	<!-- mapper file에서 긴 이름의 타입을 간단한 별칭으로 대체해서 사용가능하도록 설정 -->
+	<typeAliases>
+		<typeAlias type="com.kh.portfolio.board.vo.RboardVO"
+			alias="RboardVO" />
+		<typeAlias type="com.kh.portfolio.board.vo.BoardVO"
+			alias="BoardVO" />
+		<typeAlias type="com.kh.portfolio.member.vo.MemberVO"
+			alias="MemberVO" />
+	</typeAliases>
+
 </configuration>
