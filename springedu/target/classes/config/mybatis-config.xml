@@ -18,6 +18,8 @@
 			alias="BoardVO" />
 		<typeAlias type="com.kh.portfolio.member.vo.MemberVO"
 			alias="MemberVO" />
+				<typeAlias type="com.kh.portfolio.board.vo.VoteVO"
+			alias="VoteVO" />
 	</typeAliases>
 
 </configuration>

@@ -11,7 +11,8 @@
 		rgroup,
 		rstep,
 		rindent)
-		values (
+		values
+		(
 		rboard_rnum_seq.nextval,
 		#{bnum},
 		#{rid},
@@ -19,51 +20,132 @@
 		RBOARD_RNUM_SEQ.currval,
 		0,
 		0)
-
+		<!-- 게시글 생성후 게시글번호가 생성되고 이생성된 번호를 읽어와서 BoardVO.setBnum()에 넣어줌 -->
+		<selectKey keyProperty="rnum" resultType="long"
+			order="AFTER">
+			select RBOARD_RNUM_SEQ.currval
+			from dual
+		</selectKey>
 	</insert>
 	<!-- 답 댓글 작성 -->
 	<insert id="">
-	
+
 	</insert>
 	<!-- 댓글 수정 -->
-	<update id="modfify" parameterType="RboardVO">
+	<update id="modify" parameterType="RboardVO">
 		update rboard
-		set rcontent=#{rcontent},
-				rudate = systimestamp
+		set
+		rcontent=#{rcontent},
+		rudate = systimestamp
 		where rnum = #{rnum}
 	</update>
 
 	<!-- 댓글 삭제 -->
 	<delete id="delete" parameterType="long">
-	delete from rboard
-	where rnum = #{rnum}
+		delete from rboard
+		where rnum =
+		#{rnum}
 	</delete>
 
 	<!-- 댓글 목록 -->
 	<select id="list" parameterType="map" resultType="RboardVO">
-		 select   
-		                rnum,
-                    bnum,
-                    rid,  
-                    rnickname,	
-                    rcontent,
-                    rcdate, 
-                    rgroup,
-                    rstep,
-                    rindent,
-                    prnum
-    from (  select  row_number() over( order by rgroup desc, rstep asc) as num,
-                    t1.rnum,
-                    t1.bnum,
-                    t1.rid,  
-                    t1.rnickname,	
-                    t1.rcontent,
-                    t1.rcdate, 
-                    t1.rgroup,
-                    t1.rstep,
-                    t1.rindent,
-                    t1.prnum
-            	from  rboard t1 )
-  where num between #{startRec} and #{endRec} 
+		select
+		rnum,
+		bnum,
+		rid,
+		rnickname,
+		rcontent,
+		rcdate,
+		rgroup,
+		rstep,
+		rindent,
+		prnum
+		from (
+		select row_number() over( order by rgroup desc, rstep asc) as num,
+		t1.rnum,
+		t1.bnum,
+		t1.rid,
+		t1.rnickname,
+		t1.rcontent,
+		t1.rcdate,
+		t1.rgroup,
+		t1.rstep,
+		t1.rindent,
+		t1.prnum
+		from rboard t1 )
+		where num between
+		#{startRec} and #{endRec}
+
 	</select>
+	<!-- 조회 -->
+	<select id="replyView" parameterType="long"
+		resultType="RboardVO">
+		select
+		rnum,
+		bnum,
+		rid,
+		rnickname,
+		rcontent,
+		rcdate,
+		rudate,
+		rgroup,
+		rstep,
+		rindent,
+		prnum,
+		prid,
+		prnickname
+		from rboard
+		where rnum =
+		#{rnum}
+	</select>
+	<!-- 대댓글 -->
+	<insert id="reply" parameterType="RboardVO">
+		insert into rboard(
+		rnum,
+		bnum,
+		rid,
+		rcontent,
+		rgroup,
+		rstep,
+		rindent,
+		prnum,
+		prid,
+		prnickname)
+		values (
+		rboard_rnum_seq.nextval,
+		#{bnum},
+		#{rid},
+		#{rcontent},
+		#{rgroup},
+		#{rstep}+1,
+		#{rindent}+1,
+		#{prnum},
+		#{prid},
+		#{prnickname}
+		)
+	</insert>
+	<!-- 이전댓글 step업데이트 -->
+	<update id="updateStep" parameterType="map">
+		update rboard
+		set rstep =
+		rstep+1
+		where rgroup = #{rgroup}
+		and rstep > #{rstep}
+	</update>
+	<!-- 투표 -->
+	<!-- CDATA: SQL내용에 <,>,특수문자를 xml파서에서 해석을 하지 않고 문자열로 인식을함 -->
+	<update id="vote" parameterType="VoteVO">
+	<![CDATA[
+
+		MERGE INTO rboard_vote
+					USING DUAL
+					ON (rnum= #{rnum} and bnum=#{bnum} and rid=#{rid})
+	<!-- 있으면-->
+		WHEN MATCHED THEN
+    UPDATE SET vote=#{vote}
+	<!-- 없으면-->
+		WHEN NOT MATCHED THEN
+    INSERT(rnum, bnum, rid, vote) VALUES(#{rnum},#{bnum},#{rid},#{vote})
+		]]>
+	</update>
 </mapper>
