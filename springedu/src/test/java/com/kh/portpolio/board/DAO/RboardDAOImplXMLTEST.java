@@ -33,7 +33,7 @@ public class RboardDAOImplXMLTEST {
 	@Disabled
 	void write() {
 		RboardVO rboardVO = new RboardVO();
-		rboardVO.setBnum(503);
+		rboardVO.setBnum((long)503);
 		rboardVO.setRid("sewon0618@naver.com");
 		rboardVO.setRcontent("테스트 댓글내용111");		
 		rboardDAO.write(rboardVO);
@@ -50,7 +50,7 @@ public class RboardDAOImplXMLTEST {
 		String rcontent = "테스트 댓글 내용 수정 321";
 		RboardVO rboardVO = new RboardVO();
 		rboardVO.setRcontent(rcontent);	
-		rboardVO.setBnum(503);
+		rboardVO.setBnum((long)503);
 		rboardVO.setRid("sewon0618@naver.com");
 		rboardVO.setRnum(rnum);
 		
