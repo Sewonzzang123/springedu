@@ -4,9 +4,11 @@
 <%@ include file="/WEB-INF/views/include/common.jsp"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <title>게시글 보기</title>
-<link rel="stylesheet" href="${contextPath }/css/board/board.css">
+<link rel="stylesheet" href="${contextPath }/css/board/board.css?ver=1">
 <link rel="stylesheet" href="${contextPath }/css/board/readForm.css">
+
 <script defer src="${contextPath }/js/board/readForm.js?ver=34"></script>
+
 </head>
 <body>
 	<!-- 최상위메뉴 -->
@@ -93,9 +95,12 @@
 							</c:if></li>
 					</ul>
 				</form:form>
-			</div>
+			<!-- 대댓글창 -->
+		<%@ include file="/WEB-INF/views/board/rereply.jsp"%>
+			</div>		
 		</div>
 	</main>
+	
 	<!-- 푸터 -->
 	<%@ include file="/WEB-INF/views/include/footer.jsp"%>
 

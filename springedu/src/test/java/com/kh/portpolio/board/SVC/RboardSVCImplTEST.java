@@ -27,10 +27,10 @@ public class RboardSVCImplTEST {
 	@DisplayName("reply")
 	void reply() {
 		RboardVO rboardVO = new RboardVO();
-		rboardVO.setPrnum(46);
-		rboardVO.setBnum(503);
-		rboardVO.setRid("test@test.com");
-		rboardVO.setRcontent("46번 대대댓글 테스트");
+		rboardVO.setPrnum((long)81);
+		rboardVO.setBnum((long)493);
+		rboardVO.setRid("test3@test.com");
+		rboardVO.setRcontent("81번 대댓글 테스트");
 		
 		rboardSVC.reply(rboardVO);
 	}

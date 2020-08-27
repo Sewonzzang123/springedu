@@ -111,7 +111,7 @@ public class RequestController {
 		model.addAttribute("name", name);
 		model.addAttribute("age", age);
 		
-		return "test";
+		return "/temp/test";
 	}
 	//ModelAndView 사용
 	@GetMapping("/11/{name}/{age}")

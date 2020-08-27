@@ -57,8 +57,8 @@ public class RboardDAOImplXML implements RboardDAO {
 		return sqlSession.insert("mappers.RboardDAO-mapper.reply", rboardVO);
 	}
 	@Override
-	public int updateStep(int rgroup,int rstep) {
-		Map<String, Integer> map = new HashMap<>();
+	public int updateStep(long rgroup,long rstep) {
+		Map<String, Long> map = new HashMap<>();
 		map.put("rgroup",rgroup);
 		map.put("rstep",rstep);
 		return sqlSession.update("mappers.RboardDAO-mapper.updateStep", map);
