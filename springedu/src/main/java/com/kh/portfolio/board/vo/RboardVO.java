@@ -14,11 +14,10 @@ import lombok.Data;
 @Data
 public class RboardVO {
 
-@NotNull
 @Positive
 private Long rnum;				//	RNUM	NUMBER(10,0)	No		1	"댓글 번호
 
-@NotNull
+
 @Positive
 private Long bnum;				//	BNUM	NUMBER(10,0)	No		2	"게시글 번호
 
@@ -27,7 +26,7 @@ private Long bnum;				//	BNUM	NUMBER(10,0)	No		2	"게시글 번호
 //@Pattern(regexp="\\w+@\\w.\\w+(\\.\\w+)?", message="이메일 형식으로 입력바랍니다.")
 private String rid;				//	RID	VARCHAR2(40 BYTE)	No		3	"작성자 ID
 
-@NotNull
+
 @Size(min=2, max=10, message="별칭은 최대 10자까지 가능합니다.")
 private String rnickname;	//	RNICKNAME	VARCHAR2(30 BYTE)	Yes		4	작성자이름(별칭)
 

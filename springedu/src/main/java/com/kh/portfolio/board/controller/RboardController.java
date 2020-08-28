@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.portfolio.board.svc.RboardSVC;
@@ -27,6 +27,7 @@ import com.kh.portfolio.board.vo.RboardVO;
 import com.kh.portfolio.board.vo.VoteVO;
 import com.kh.portfolio.exception.ErrorMsg;
 import com.kh.portfolio.exception.RestAccessException;
+import com.kh.portfolio.member.vo.MemberVO;
 
 //댓글에 대한것만 url요청
 @RestController
@@ -42,12 +43,22 @@ public class RboardController {
 	@PostMapping(value="", produces="application/json")
 	public ResponseEntity<String> write(
 			@Valid @RequestBody RboardVO rboardVO,
-			BindingResult result){
+			BindingResult result,
+			HttpServletRequest request){
 		ResponseEntity<String> res =null;
 		
 		if (result.hasErrors()) {
 			throwRestAccessException(result);
 		}
+		
+		//getSession : true면 새로 생성, false면 새로 생성 x
+		MemberVO memberVO = (MemberVO)request.getSession(false);
+		if(memberVO!=null) {
+		//세션에서 아이디, 별칭 가져오기
+			rboardVO.setRid(memberVO.getId());
+			rboardVO.setRnickname(memberVO.getNickname());
+		}
+		
 		int cnt = rboardSVC.write(rboardVO);
 		
 		//성공
@@ -108,12 +119,21 @@ public class RboardController {
 	@PostMapping(value="/reply",produces = "application/json")
 	public ResponseEntity<String> reply(
 			@Valid @RequestBody RboardVO rboardVO,
-			BindingResult result){
+			BindingResult result,
+			HttpServletRequest request){
 		ResponseEntity<String> res =null;
 		
 		if (result.hasErrors()) {
 			throwRestAccessException(result);
 		}
+		//getSession : true면 새로 생성, false면 새로 생성 x
+		MemberVO memberVO = (MemberVO)request.getSession(false);
+		if(memberVO != null) {
+		//세션에서 아이디, 별칭 가져오기
+			rboardVO.setRid(memberVO.getId());
+			rboardVO.setRnickname(memberVO.getNickname());
+		}
+		
 		int cnt = rboardSVC.reply(rboardVO);
 		
 		//성공
@@ -128,10 +148,11 @@ public class RboardController {
 	@GetMapping(value="/{reqPage}", produces="application/json")
 	public ResponseEntity<List<RboardVO>> list(
 			@PathVariable(value="reqPage",required = true) String reqPage){
+		
 		ResponseEntity<List<RboardVO>> res = null;
 		
 		List<RboardVO> list = rboardSVC.list();
-		if(list.size()>0) {
+		if(list.size() > 0) {
 			res = new ResponseEntity<List<RboardVO>>(list,HttpStatus.OK);
 		}
 		return res;		

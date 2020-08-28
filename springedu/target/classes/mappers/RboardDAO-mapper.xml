@@ -8,6 +8,7 @@
 		bnum,
 		rid,
 		rcontent,
+		rnickname,
 		rgroup,
 		rstep,
 		rindent)
@@ -17,6 +18,7 @@
 		#{bnum},
 		#{rid},
 		#{rcontent},
+		#{rnickname},
 		RBOARD_RNUM_SEQ.currval,
 		0,
 		0)
@@ -38,6 +40,7 @@
 		rcontent=#{rcontent},
 		rudate = systimestamp
 		where rnum = #{rnum}
+		and rid=#{rid}
 	</update>
 
 	<!-- 댓글 삭제 -->
@@ -49,32 +52,49 @@
 
 	<!-- 댓글 목록 -->
 	<select id="list" parameterType="map" resultType="RboardVO">
-		select
-		rnum,
-		bnum,
-		rid,
-		rnickname,
-		rcontent,
-		rcdate,
-		rgroup,
-		rstep,
-		rindent,
-		prnum
-		from (
-		select row_number() over( order by rgroup desc, rstep asc) as num,
-		t1.rnum,
-		t1.bnum,
-		t1.rid,
-		t1.rnickname,
-		t1.rcontent,
-		t1.rcdate,
-		t1.rgroup,
-		t1.rstep,
-		t1.rindent,
-		t1.prnum
-		from rboard t1 )
-		where num between
-		#{startRec} and #{endRec}
+select 
+					t1.rnum,
+					t1.bnum,
+					t1.rid,
+					t1.rnickname,
+					t1.rcontent,
+					t1.rcdate,
+					t1.rgroup,
+					t1.rstep,
+					t1.rindent,
+					t1.prnum,
+					nvl(t2.good,0) as rgood,
+					nvl(t2.bad,0) as rbad
+from  
+		(select
+					rnum,
+					bnum,
+					rid,
+					rnickname,
+					rcontent,
+					rcdate,
+					rgroup,
+					rstep,
+					rindent,
+					prnum
+			from (
+					select row_number() over( order by rgroup desc, rstep asc) as num,
+						t1.rnum,
+						t1.bnum,
+						t1.rid,
+						t1.rnickname,
+						t1.rcontent,
+						t1.rcdate,
+						t1.rgroup,
+						t1.rstep,
+						t1.rindent,
+						t1.prnum
+						from rboard t1 )
+						where num between #{startRec} and #{endRec} ) t1,
+       (select rnum, nvl(count(decode(vote,'GOOD',1)),0)good, nvl(count(decode(vote,'BAD',1)),0) bad
+        		from rboard_vote
+        			group by rnum) t2
+where t1.rnum = t2.rnum(+)
 
 	</select>
 	<!-- 조회 -->
@@ -95,8 +115,7 @@
 		prid,
 		prnickname
 		from rboard
-		where rnum =
-		#{rnum}
+		where rnum =#{rnum}
 	</select>
 	<!-- 대댓글 -->
 	<insert id="reply" parameterType="RboardVO">
@@ -104,6 +123,7 @@
 		rnum,
 		bnum,
 		rid,
+		rnickname,
 		rcontent,
 		rgroup,
 		rstep,
@@ -115,6 +135,7 @@
 		rboard_rnum_seq.nextval,
 		#{bnum},
 		#{rid},
+		#{rnickname},
 		#{rcontent},
 		#{rgroup},
 		#{rstep}+1,

@@ -40,7 +40,7 @@ public class RboardSVCImpl implements RboardSVC {
 	@Override
 	public List<RboardVO> list() {
 	
-		return null;
+		return rboardDAO.list();
 	}
 	//대댓글 작성
 	@Override

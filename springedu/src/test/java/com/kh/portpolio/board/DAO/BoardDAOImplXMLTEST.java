@@ -103,7 +103,7 @@ public class BoardDAOImplXMLTEST {
 	
 	@Test
 	@DisplayName("게시글 보기")
-//	@Disabled
+	@Disabled
 	void view() {
 		String bnum="84";
 		
