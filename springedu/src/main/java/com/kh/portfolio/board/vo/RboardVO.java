@@ -21,7 +21,7 @@ private Long rnum;				//	RNUM	NUMBER(10,0)	No		1	"댓글 번호
 @Positive
 private Long bnum;				//	BNUM	NUMBER(10,0)	No		2	"게시글 번호
 
-@NotNull
+//@NotNull
 @Email
 //@Pattern(regexp="\\w+@\\w.\\w+(\\.\\w+)?", message="이메일 형식으로 입력바랍니다.")
 private String rid;				//	RID	VARCHAR2(40 BYTE)	No		3	"작성자 ID

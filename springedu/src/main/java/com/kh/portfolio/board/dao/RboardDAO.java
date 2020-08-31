@@ -13,7 +13,7 @@ public interface RboardDAO {
 	//댓글 삭제
 	int delete(long rnum);
 	//댓글 목록
-	List<RboardVO> list();
+	List<RboardVO> list(long bnum, int startRec, int endRec);
 	//댓글 조회
 	RboardVO replyView(long rnum);
 	
@@ -24,5 +24,9 @@ public interface RboardDAO {
 	//댓글 호감, 비호감	
 	//투표이력 없으면 추가 있으면 변경
 	int vote(VoteVO voteVO);
+	
+	//댓글 총 레코드 수 
+	int totalRecordCount();	
+	int totalRecordCount(String searchType, String keyword);
 	
 }

@@ -32,8 +32,7 @@ public interface BoardSVC {
 	//답글 작성
 	int reply(BoardVO boardVO);
 	//페이징제어 반환
-	PageCriteria getPageCriteria(int reqPage);
-	
+	PageCriteria getPageCriteria(int reqPage);	
 	//페이징제어 + 검색포함
 	FindCriteria getFindCriteria(int reqPage,String searchType, String keyword);
 	

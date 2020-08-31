@@ -1,7 +1,10 @@
 package com.kh.portfolio.board.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.portfolio.board.svc.RboardSVC;
 import com.kh.portfolio.board.vo.RboardVO;
 import com.kh.portfolio.board.vo.VoteVO;
+import com.kh.portfolio.common.page.PageCriteria;
 import com.kh.portfolio.exception.ErrorMsg;
 import com.kh.portfolio.exception.RestAccessException;
 import com.kh.portfolio.member.vo.MemberVO;
@@ -52,7 +56,7 @@ public class RboardController {
 		}
 		
 		//getSession : true면 새로 생성, false면 새로 생성 x
-		MemberVO memberVO = (MemberVO)request.getSession(false);
+		MemberVO memberVO = (MemberVO)request.getSession(false).getAttribute("member");
 		if(memberVO!=null) {
 		//세션에서 아이디, 별칭 가져오기
 			rboardVO.setRid(memberVO.getId());
@@ -77,12 +81,22 @@ public class RboardController {
 	@PutMapping(value="",produces = "application/json")
 	public ResponseEntity<String> modify(
 			@Valid @RequestBody RboardVO rboardVO,
-			BindingResult result){
+			BindingResult result,
+			HttpServletRequest request){
 		ResponseEntity<String> res =null;
 		
 		if (result.hasErrors()) {
 			throwRestAccessException(result);
 		}
+		
+		//getSession : true면 새로 생성, false면 새로 생성 x
+		MemberVO memberVO = (MemberVO)request.getSession(false).getAttribute("member");
+		if(memberVO!=null) {
+		//세션에서 아이디, 별칭 가져오기
+			rboardVO.setRid(memberVO.getId());
+			rboardVO.setRnickname(memberVO.getNickname());
+		}
+		
 		int cnt = rboardSVC.modify(rboardVO);
 		
 		//성공
@@ -127,7 +141,7 @@ public class RboardController {
 			throwRestAccessException(result);
 		}
 		//getSession : true면 새로 생성, false면 새로 생성 x
-		MemberVO memberVO = (MemberVO)request.getSession(false);
+		MemberVO memberVO = (MemberVO)request.getSession(false).getAttribute("member");
 		if(memberVO != null) {
 		//세션에서 아이디, 별칭 가져오기
 			rboardVO.setRid(memberVO.getId());
@@ -145,15 +159,27 @@ public class RboardController {
 	}
 	
 	//댓글 목록
-	@GetMapping(value="/{reqPage}", produces="application/json")
-	public ResponseEntity<List<RboardVO>> list(
-			@PathVariable(value="reqPage",required = true) String reqPage){
+	@GetMapping(value="/{reqPage}/{bnum}", produces="application/json")
+	public ResponseEntity<Map<String,Object>> list(
+			@PathVariable(value="reqPage",required = false) Optional<Integer> reqPage,
+			@PathVariable(value="bnum",required = true) long bnum){
 		
-		ResponseEntity<List<RboardVO>> res = null;
+		ResponseEntity<Map<String,Object>> res = null;
+		Map<String,Object> map = new HashMap<>();
 		
-		List<RboardVO> list = rboardSVC.list();
+		
+		//1) 댓글 목록
+		List<RboardVO> list = rboardSVC.list(reqPage.orElse(1), bnum);
+		
+		//2) 페이징 정보
+		PageCriteria pageCriteria = rboardSVC.getPageCriteria(reqPage.orElse(1));
+		
+		//3) Map에 댓글정보 + 페이지정보 담기
+		map.put("list",list);
+		map.put("pageCriteria",pageCriteria);
+		
 		if(list.size() > 0) {
-			res = new ResponseEntity<List<RboardVO>>(list,HttpStatus.OK);
+			res = new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
 		}
 		return res;		
 	}

@@ -69,12 +69,12 @@ public class RboardDAOImplXMLTEST {
 	
 	@Test
 	@DisplayName("댓글목록")
-//	@Disabled
+	@Disabled
 	void List() {
-		List<RboardVO> list = rboardDAO.list();
-		for(RboardVO rboardVO:list) {
-			logger.info(rboardVO.toString());
-		}
+		//List<RboardVO> list = rboardDAO.list();
+		//for(RboardVO rboardVO:list) {
+		//	logger.info(rboardVO.toString());
+		//}
 	}
 
 	@Test

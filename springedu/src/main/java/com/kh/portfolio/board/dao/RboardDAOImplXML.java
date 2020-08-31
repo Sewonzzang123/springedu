@@ -40,10 +40,11 @@ public class RboardDAOImplXML implements RboardDAO {
 	}
 	//댓글 목록
 	@Override
-	public List<RboardVO> list() {
+	public List<RboardVO> list(long bnum, int startRec, int endRec) {
 		Map<String,Integer> map = new HashMap<>();
-		map.put("startRec",1);
-		map.put("endRec",100);
+		map.put("bnum",(int)bnum);
+		map.put("startRec",startRec);
+		map.put("endRec",endRec);
 		return sqlSession.selectList("mappers.RboardDAO-mapper.list", map);
 	}
 	//댓글 조회
@@ -69,7 +70,19 @@ public class RboardDAOImplXML implements RboardDAO {
 	public int vote(VoteVO voteVO) {
 		return sqlSession.update("mappers.RboardDAO-mapper.vote", voteVO);
 	}
-
+	
+	//댓글 총 레코드 수 
+	@Override
+	public int totalRecordCount() {
+		return sqlSession.selectOne("mappers.RboardDAO-mapper.totalRecordCount");
+	}
+	@Override
+	public int totalRecordCount(String searchType, String keyword) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("searchType", searchType);
+		map.put("keyword", keyword);
+		return sqlSession.selectOne("mappers.RboardDAO-mapper.searchedTotalRecordCount",map);
+	}
 
 
 }
