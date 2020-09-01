@@ -3,13 +3,13 @@ package com.kh.portfolio.member.controller;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.portfolio.member.svc.MemberSVC;
@@ -49,6 +49,11 @@ public class LoginController {
 			// 2-2)id가 존재하면
 			// 3-1)비밀번호가 일치하는 경우
 			if (memberVO.getPw().equals(pw)) {
+				if(memberVO.getPic() != null) {
+					byte[] encoded = Base64.encodeBase64(memberVO.getPic());
+					memberVO.setPicBase64(new String(encoded));
+					memberVO.setPic(null);
+				}
 				session.setAttribute("member", memberVO);
 				logger.info("로그인성공");
 			} else {

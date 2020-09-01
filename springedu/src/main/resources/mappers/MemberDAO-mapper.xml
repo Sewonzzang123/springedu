@@ -50,7 +50,7 @@
 	<!-- //로그인 -->
 	<select id="login" parameterType="map"
 		resultType="com.kh.portfolio.member.vo.MemberVO">
-		select id,pw,nickname,tel,gender,region,birth,cdate,udate
+		select id,pw,nickname,tel,gender,region,birth,cdate,udate,pic,ftype,fsize,fname
 		from member
 		where id=#{id}
 		and pw=#{pw}

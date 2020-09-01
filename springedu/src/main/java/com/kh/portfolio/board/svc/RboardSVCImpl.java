@@ -55,7 +55,7 @@ public class RboardSVCImpl implements RboardSVC {
 		//댓글 목록
 		recordCriteria.setReqPage(reqPage);
 		//한페이지에 보여줄 게시글 수 
-		recordCriteria.setRecNumPerPage(20);	
+		recordCriteria.setRecNumPerPage(10);	
 		list = rboardDAO.list(bnum,
 													recordCriteria.getStartRec()
 													,recordCriteria.getEndRec());
@@ -98,10 +98,10 @@ public class RboardSVCImpl implements RboardSVC {
 	}
 //페이징제어 반환
 	@Override
-	public PageCriteria getPageCriteria(int reqPage) {
+	public PageCriteria getPageCriteria(int reqPage, long bnum) {
 
 		//한페이지에 보여줄 레코드수
-		recordCriteria.setRecNumPerPage(20);
+		recordCriteria.setRecNumPerPage(10);
 		//사용자의 요청페이지
 		recordCriteria.setReqPage(reqPage);
 		//한페이지에보여줄 페이지수
@@ -110,7 +110,7 @@ public class RboardSVCImpl implements RboardSVC {
 		pageCriteria.setRc(recordCriteria);
 		
 		//게시글 총 레코드 건수
-		pageCriteria.setTotalRec(rboardDAO.totalRecordCount());
+		pageCriteria.setTotalRec(rboardDAO.totalRecordCount(bnum));
 		//페이징계산
 		pageCriteria.calculatePaging();
 		
@@ -119,10 +119,10 @@ public class RboardSVCImpl implements RboardSVC {
 
 	//페이징제어 + 검색어포함
 	@Override
-	public FindCriteria getFindCriteria(int reqPage, String searchType, String keyword) {
+	public FindCriteria getFindCriteria(int reqPage, String searchType, String keyword, long bnum) {
 
 		//한페이지에 보여줄 레코드수
-		recordCriteria.setRecNumPerPage(20);
+		recordCriteria.setRecNumPerPage(10);
 		//사용자의 요청페이지
 		recordCriteria.setReqPage(reqPage);
 		//한페이지에보여줄 페이지수
@@ -131,7 +131,7 @@ public class RboardSVCImpl implements RboardSVC {
 		pageCriteria.setRc(recordCriteria);
 
 		//게시글 총 레코드 건수
-		pageCriteria.setTotalRec(rboardDAO.totalRecordCount(searchType,keyword));
+		pageCriteria.setTotalRec(rboardDAO.totalRecordCount(searchType,keyword,bnum));
 					
 		//페이징계산
 		pageCriteria.calculatePaging();

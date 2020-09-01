@@ -125,6 +125,7 @@ public class MemberDAOImplXMLTest {
 		
 		String id = memberDAO.findID(tel, birth);
 		logger.info(id);
+		
 		//Assertions.assertEquals("test@test.com",id);
 				
 	}

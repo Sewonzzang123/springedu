@@ -51,6 +51,7 @@
 			<beans:bean id="loginInterceptor"
 				class="com.kh.portfolio.interceptor.LoginInterceptor" />
 		</interceptor>
+		
 	</interceptors>
 
 

@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Entity
@@ -30,6 +32,7 @@ private String rid;				//	RID	VARCHAR2(40 BYTE)	No		3	"작성자 ID
 @Size(min=2, max=10, message="별칭은 최대 10자까지 가능합니다.")
 private String rnickname;	//	RNICKNAME	VARCHAR2(30 BYTE)	Yes		4	작성자이름(별칭)
 
+@JsonFormat(pattern= "yyyy-MM-dd h:mm a", timezone="Asia/Seoul")
 private Timestamp rcdate;			//	RCDATE	TIMESTAMP(6)	No	SYSTIMESTAMP 	5	작성일
 private Timestamp rudate;			//	RUDATE	TIMESTAMP(6)	Yes	SYSTIMESTAMP 	6	수정일
 

@@ -43,7 +43,7 @@
 									cssClass="svr_msg" path="btitle" /></li>
 						<li>
 							<label for="bid">작성자</label>
-							<input type="text" id="bid" value="${sessionScope.member.nickname }(${sessionScope.member.id })" readonly="true"/>
+							<input type="text" id="bid" value="${requestScope.boardVO.bnickname }(${requestScope.boardVO.bid })" readonly="true"/>
 							<span class="client_msg" id="bid.error"></sapn>								
 							<form:errors cssClass="svr_msg" path="bid"/>
 						</li>
@@ -60,10 +60,10 @@
 								class="btn rmode btn-outline-success"
 								data-bnum="${requestScope.boardVO.bnum }" data-returnPage="${requestScope.returnPage }">답글</form:button> 
 								<!--작성자만 수정, 삭제 가능 시작-->				
-								<c:if test="${requestScope.boardVO.bid }.equals(${sessionScope.member.id })">
-								<form:button id="modifyBtn" type="button" class="btn rmode btn-outline-danger">수정</form:button> 
-								<form:button id="deleteBtn" type="button" class="btn rmode btn-outline-info"
-								data-bnum="${requestScope.boardVO.bnum }" data-returnPage="${requestScope.returnPage }"> 삭제</form:button>
+								<c:if test="${sessionScope.member.id == requestScope.boardVO.bid}">
+									<form:button id="modifyBtn" type="button" class="btn rmode btn-outline-danger">수정</form:button> 
+									<form:button id="deleteBtn" type="button" class="btn rmode btn-outline-info"
+									data-bnum="${requestScope.boardVO.bnum }" data-returnPage="${requestScope.returnPage }"> 삭제</form:button>
 								</c:if>
 								<!-- 작성자만 수정, 삭제 가능 끝--> 
 								<!-- 수정모드 버튼 -->

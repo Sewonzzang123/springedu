@@ -26,7 +26,7 @@ public interface RboardDAO {
 	int vote(VoteVO voteVO);
 	
 	//댓글 총 레코드 수 
-	int totalRecordCount();	
-	int totalRecordCount(String searchType, String keyword);
+	int totalRecordCount(long bnum);	
+	int totalRecordCount(String searchType, String keyword, long bnum);
 	
 }

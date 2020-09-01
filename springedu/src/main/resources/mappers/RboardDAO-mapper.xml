@@ -64,7 +64,8 @@ select
 					t1.rindent,
 					t1.prnum,
 					nvl(t2.good,0) as rgood,
-					nvl(t2.bad,0) as rbad
+					nvl(t2.bad,0) as rbad,
+					t1.pic, t1.ftype
 from  
 		(select
 					rnum,
@@ -76,7 +77,8 @@ from
 					rgroup,
 					rstep,
 					rindent,
-					prnum
+					prnum,
+					pic, ftype
 			from (
 					select row_number() over( order by rgroup desc, rstep asc) as num,
 						t1.rnum,
@@ -88,9 +90,11 @@ from
 						t1.rgroup,
 						t1.rstep,
 						t1.rindent,
-						t1.prnum
-					from rboard t1 
-					where t1.bnum = #{bnum}
+						t1.prnum,
+						t2.pic, t2.ftype
+					from 	rboard t1 , member t2
+					where t1.rid = t2.id
+					and   t1.bnum = #{bnum}
 					)
 			where num between #{startRec} and #{endRec} ) t1,
        (select rnum, nvl(count(decode(vote,'GOOD',1)),0)good, nvl(count(decode(vote,'BAD',1)),0) bad
@@ -159,21 +163,20 @@ where t1.rnum = t2.rnum(+)
 	<!-- CDATA: SQL내용에 <,>,특수문자를 xml파서에서 해석을 하지 않고 문자열로 인식을함 -->
 	<update id="vote" parameterType="VoteVO">
 	<![CDATA[
-
 		MERGE INTO rboard_vote
 					USING DUAL
 					ON (rnum= #{rnum} and bnum=#{bnum} and rid=#{rid})
-	<!-- 있으면-->
+	  /* 있으면 */
 		WHEN MATCHED THEN
     UPDATE SET vote=#{vote}
-	<!-- 없으면-->
+	  /* 없으면 */
 		WHEN NOT MATCHED THEN
     INSERT(rnum, bnum, rid, vote) VALUES(#{rnum},#{bnum},#{rid},#{vote})
 		]]>
 	</update>
 	
 	<!-- 게시글 총 레코드 수 -->
-<select id="totalRecordCount"
+<select id="totalRecordCount" parameterType="long"
 				resultType="int">
 					 select count(*) as totalRecCnt
 					   from rboard

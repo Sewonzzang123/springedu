@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -122,7 +123,8 @@ public class BoardController {
 	public String view(
 			@PathVariable("bnum") String bnum,//("bnum")생략가능
 			@PathVariable("returnPage") String returnPage,
-			Model model) {
+			Model model,
+			HttpSession session) {
 		Map<String, Object> map = boardSVC.view(bnum);
 		BoardVO boardVO = (BoardVO)map.get("boardVO");
 
